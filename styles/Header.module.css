@@ -1,0 +1,24 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  min-height: 20vh;
+  background: #0296b2;
+}
+
+.logoContainer {
+}
+
+.titleContainer {
+}
+
+.searchIconContainer {
+  color: whitesmoke;
+  margin-right: 20px;
+}
+
+.searchIcon {
+}
