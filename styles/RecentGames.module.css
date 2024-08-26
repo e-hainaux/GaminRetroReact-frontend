@@ -18,7 +18,28 @@
 }
 
 .gamesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
   width: 85%;
   height: auto;
   min-height: 150px;
+  margin: 16px;
+}
+
+.gameCard {
+  width: 90px;
+  height: auto;
+}
+
+.gameTitle {
+  font-size: 12px;
+  text-align: center;
+}
+
+.platformName {
+  font-size: 10px;
+  font-weight: 300;
+  text-align: center;
 }
