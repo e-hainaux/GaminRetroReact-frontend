@@ -9,7 +9,13 @@ export default function RecentGames() {
     const fetchGames = async () => {
       try {
         const response = await fetch(
-          "https://gaminretroreact-backend.vercel.app/games/recentgames"
+          "https://gaminretroreact-backend.vercel.app/games/recentgames",
+          {
+            headers: {
+              Accept: "*/*",
+              Authorization: "Access-Control-Allow-Origin",
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
