@@ -9,7 +9,13 @@ export default function RecentGames() {
     const fetchGames = async () => {
       try {
         const response = await fetch(
-          "https://gaminretroreact-backend.vercel.app/games/recentgames"
+          "https://gaminretroreact-backend.vercel.app/games/recentgames",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
@@ -17,7 +23,7 @@ export default function RecentGames() {
         const data = await response.json();
         setRecentGames(data);
       } catch (error) {
-        console.error("Erreur fetch : ", error);
+        console.error(error.message);
       }
     };
     fetchGames();
