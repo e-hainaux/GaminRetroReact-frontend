@@ -8,7 +8,9 @@ export default function RecentGames() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch("http://localhost:3000/games/recentgames");
+        const response = await fetch(
+          "https://gaminretroreact-backend.vercel.app/games/recentgames"
+        );
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
         }
