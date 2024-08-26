@@ -9,7 +9,7 @@ export default function RecentGames() {
     const fetchGames = async () => {
       try {
         const response = await fetch(
-          "https://gamin-retro-react-backend.vercel.app/games/recentgames"
+          "https://gaminretroreact-backend.vercel.app/games/recentgames"
         );
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
