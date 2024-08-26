@@ -17,7 +17,7 @@ export default function RecentGames() {
         const data = await response.json();
         setRecentGames(data);
       } catch (error) {
-        console.error(error.message);
+        console.error("Erreur fetch : ", error);
       }
     };
     fetchGames();
