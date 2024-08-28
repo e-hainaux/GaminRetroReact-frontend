@@ -21,6 +21,10 @@ export default function RecentGames() {
           }
         );
         console.log("Réponse reçue:", response);
+        const contentType = response.headers.get("content-type");
+        if (!contentType.includes("application/json")) {
+          throw new Error("La réponse n'est pas en format JSON !");
+        }
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
         }
