@@ -7,11 +7,11 @@ export default function RecentGames() {
 
   useEffect(() => {
     console.log("useEffect déclenché");
-    const fetchGames = () => {
+    const fetchGames = async () => {
       console.log("Fonction fetchGames appelée");
       try {
         console.log("Lancement de la requête fetch en front.");
-        const response = fetch(
+        const response = await fetch(
           "https://gaminretroreact-backend.vercel.app/games/recentgames",
           {
             method: "GET",
@@ -28,7 +28,7 @@ export default function RecentGames() {
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
         }
-        const data = response.json();
+        const data = await response.json();
         setRecentGames(data);
       } catch (error) {
         console.error(error.message);
