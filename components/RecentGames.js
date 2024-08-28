@@ -15,10 +15,9 @@ export default function RecentGames() {
           "https://gaminretroreact-backend.vercel.app/games/recentgames",
           {
             method: "GET",
-            mode: "no-cors",
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
         );
         console.log("Réponse reçue:", response);
