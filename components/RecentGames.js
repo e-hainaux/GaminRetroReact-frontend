@@ -8,6 +8,7 @@ export default function RecentGames() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
+        console.log("Lancement de la requête fetch en front.");
         const response = await fetch(
           "https://gaminretroreact-backend.vercel.app/games/recentgames",
           {
