@@ -6,7 +6,9 @@ export default function RecentGames() {
   const [recentGames, setRecentGames] = useState([]);
 
   useEffect(() => {
+    console.log("useEffect déclenché");
     const fetchGames = async () => {
+      console.log("Fonction fetchGames appelée");
       try {
         console.log("Lancement de la requête fetch en front.");
         const response = await fetch(
@@ -18,6 +20,7 @@ export default function RecentGames() {
             },
           }
         );
+        console.log("Réponse reçue:", response);
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des jeux");
         }
