@@ -48,7 +48,7 @@ export default function RecentGames() {
               alt={game.title}
               width={100}
               height={100}
-              layout="responsive"
+              className={styles.gameImage}
             />
             <h3 className={styles.gameTitle}>{game.title}</h3>
             <h4 className={styles.platformName}>{game.platform}</h4>

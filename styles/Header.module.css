@@ -13,3 +13,13 @@
   color: whitesmoke;
   margin-right: 20px;
 }
+
+.logocontainer {
+  overflow: hidden;
+}
+.logoImage,
+.titleImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

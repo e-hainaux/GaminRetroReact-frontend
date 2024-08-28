@@ -43,3 +43,9 @@
   font-weight: 300;
   text-align: center;
 }
+
+.gameImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

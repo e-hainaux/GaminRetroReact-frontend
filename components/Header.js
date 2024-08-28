@@ -13,6 +13,7 @@ export default function Header() {
           width={100}
           height={100}
           quality={100}
+          className={styles.logoImage}
         />
       </div>
       <div className={styles.titleContainer}>
@@ -22,6 +23,8 @@ export default function Header() {
           width={200}
           height={100}
           quality={100}
+          className={styles.titleImage}
+          priority={true}
         />
       </div>
       <div className={styles.searchIconContainer}>
