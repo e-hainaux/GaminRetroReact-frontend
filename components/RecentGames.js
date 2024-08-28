@@ -12,7 +12,7 @@ export default function RecentGames() {
       try {
         console.log("Lancement de la requête fetch en front.");
         const response = await fetch(
-          "https://gaminretroreact-backend.vercel.app/games/dbgames",
+          "https://gaminretroreact-backend.vercel.app/games/recentgames",
           {
             method: "GET",
             headers: {
@@ -36,37 +36,6 @@ export default function RecentGames() {
     };
     fetchGames();
   }, []);
-  // useEffect(() => {
-  //   console.log("useEffect déclenché");
-  //   const fetchGames = async () => {
-  //     console.log("Fonction fetchGames appelée");
-  //     try {
-  //       console.log("Lancement de la requête fetch en front.");
-  //       const response = await fetch(
-  //         "https://gaminretroreact-backend.vercel.app/games/recentgames",
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       console.log("Réponse reçue:", response);
-  //       const contentType = response.headers.get("content-type");
-  //       if (!contentType.includes("application/json")) {
-  //         throw new Error("La réponse n'est pas en format JSON !");
-  //       }
-  //       if (!response.ok) {
-  //         throw new Error("Erreur lors de la récupération des jeux");
-  //       }
-  //       const data = await response.json();
-  //       setRecentGames(data);
-  //     } catch (error) {
-  //       console.error(error.message);
-  //     }
-  //   };
-  //   fetchGames();
-  // }, []);
 
   return (
     <div className={styles.mainContainer}>
