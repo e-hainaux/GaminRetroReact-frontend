@@ -5,6 +5,8 @@ import styles from "../styles/RecentGames.module.css";
 export default function RecentGames() {
   const [recentGames, setRecentGames] = useState([]);
 
+  const API_URI = process.env.API_URI;
+
   useEffect(() => {
     console.log("useEffect déclenché");
     const fetchGames = async () => {
@@ -12,7 +14,7 @@ export default function RecentGames() {
       try {
         console.log("Lancement de la requête fetch en front.");
         const response = await fetch(
-          "https://gaminretroreact-backend.vercel.app/games/recentgames",
+          `http://localhost:3000/games/recentgames`,
           {
             method: "GET",
             headers: {
