@@ -9,9 +9,27 @@
   background: #0296b2;
 }
 
-.searchIconContainer {
-  color: whitesmoke;
+.logoutButton {
+  display: flex;
+  width: 24px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.logoutIconContainer {
+  position: fixed;
+  top: 15px;
+  right: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  background: #d9d9d9;
+  color: #ff19cf;
   margin-right: 20px;
+  border-radius: 8px;
 }
 
 .logocontainer {
