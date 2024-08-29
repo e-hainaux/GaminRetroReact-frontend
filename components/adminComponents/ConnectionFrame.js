@@ -13,7 +13,7 @@ export default function ConnectionFrame() {
 
   return (
     <div className={styles.mainContainer}>
-      <h1 className={styles.title}>Connexion admin</h1>
+      <h1 className={styles.title}>CONNEXION ADMIN</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label htmlFor="identifier" className={styles.label}>
