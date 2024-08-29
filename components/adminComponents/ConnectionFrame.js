@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 
 import styles from "../../styles/ConnectionFrame.module.css";
+import { useRouter } from "next/router";
 
 export default function ConnectionFrame() {
+  const API_URI = process.env.NEXT_PUBLIC_API_URI;
+
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Identifiant:", identifier, "Mot de passe:", password);
+    router.push("/admin/add-games");
   };
 
   return (

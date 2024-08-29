@@ -1,0 +1,25 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  min-height: 20vh;
+  background: #0296b2;
+}
+
+.searchIconContainer {
+  color: whitesmoke;
+  margin-right: 20px;
+}
+
+.logocontainer {
+  overflow: hidden;
+}
+.logoImage,
+.titleImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
