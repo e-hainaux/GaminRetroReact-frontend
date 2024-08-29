@@ -5,7 +5,7 @@ import styles from "../styles/RecentGames.module.css";
 export default function RecentGames() {
   const [recentGames, setRecentGames] = useState([]);
 
-  const API_URI = process.env.API_URI;
+  const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
   useEffect(() => {
     console.log("useEffect déclenché");
@@ -13,15 +13,14 @@ export default function RecentGames() {
       console.log("Fonction fetchGames appelée");
       try {
         console.log("Lancement de la requête fetch en front.");
-        const response = await fetch(
-          `http://localhost:3000/games/recentgames`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        console.log("API_URI : ", API_URI);
+
+        const response = await fetch(`${API_URI}/games/recentgames`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         console.log("Réponse reçue:", response);
         const contentType = response.headers.get("content-type");
         if (!contentType.includes("application/json")) {
