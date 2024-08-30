@@ -25,7 +25,7 @@ export default function ConnectionFrame() {
       setErrorMessage("Veuillez remplir tous les champs.");
       return;
     }
-    // Démarrer le processus de connexion
+
     dispatch(loginStart());
 
     try {
@@ -40,18 +40,14 @@ export default function ConnectionFrame() {
       const data = await response.json();
       console.log("Réponse du serveur : ", data);
 
-      if (!data.result) {
+      if (!data.result || !data.token) {
         throw new Error("Erreur lors de la connexion : ", data.message);
       }
 
-      if (!data.token) {
-        throw new Error("Token absent");
-      }
+      localStorage.setItem("adminToken", data.token);
 
-      // Connexion réussie : dispatch des données dans le store
       dispatch(loginSuccess({ token: data.token, username }));
 
-      // Redirection vers la page d'ajout de jeux
       router.push("/admin/add-games");
     } catch (error) {
       console.error("Erreur : ", error.message);
@@ -59,7 +55,6 @@ export default function ConnectionFrame() {
         "Échec de la connexion, veuillez vérifier vos identifiants."
       );
 
-      // Connexion échouée : dispatch de l'erreur
       dispatch(loginFailure({ error: error.message }));
     } finally {
       console.log("Fin de la tentative de connexion");

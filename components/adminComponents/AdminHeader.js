@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/adminSlice";
 import styles from "../../styles/AdminHeader.module.css";
 import Image from "next/image";
 import { FaPowerOff } from "react-icons/fa";
@@ -7,9 +9,11 @@ import { FaPowerOff } from "react-icons/fa";
 export default function AdminHeader() {
   const router = useRouter();
   const [logged, setLogged] = useState(true);
-
-  const logout = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
     console.log("Log out !");
+    localStorage.removeItem("adminToken");
+    dispatch(logout());
     router.push("/admin");
   };
   return (
@@ -35,7 +39,7 @@ export default function AdminHeader() {
           priority={true}
         />
       </div>
-      <div onClick={logout} className={styles.logoutButton}>
+      <div onClick={handleLogout} className={styles.logoutButton}>
         <div className={styles.logoutIconContainer}>
           <FaPowerOff style={styles.logoutIcon} />
         </div>

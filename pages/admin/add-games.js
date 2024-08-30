@@ -1,3 +1,4 @@
+import withAdminAuth from "../../components/adminComponents/withAdminAuth";
 import AdminHeader from "@/components/adminComponents/AdminHeader";
 
 function AddGames() {
@@ -8,4 +9,4 @@ function AddGames() {
   );
 }
 
-export default AddGames;
+export default withAdminAuth(AddGames);
