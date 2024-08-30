@@ -1,21 +1,69 @@
-import React, { useEffect, useState } from "react";
-
-import styles from "../../styles/ConnectionFrame.module.css";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../../redux/slices/adminSlice";
+import styles from "../../styles/ConnectionFrame.module.css";
 
 export default function ConnectionFrame() {
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
-  const [identifier, setIdentifier] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Identifiant:", identifier, "Mot de passe:", password);
-    router.push("/admin/add-games");
+    setErrorMessage("");
+    if (!username || !password) {
+      setErrorMessage("Veuillez remplir tous les champs.");
+      return;
+    }
+    // Démarrer le processus de connexion
+    dispatch(loginStart());
+
+    try {
+      const response = await fetch(`${API_URI}/admin/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      console.log("Réponse du serveur : ", data);
+
+      if (!data.result) {
+        throw new Error("Erreur lors de la connexion : ", data.message);
+      }
+
+      if (!data.token) {
+        throw new Error("Token absent");
+      }
+
+      // Connexion réussie : dispatch des données dans le store
+      dispatch(loginSuccess({ token: data.token, username }));
+
+      // Redirection vers la page d'ajout de jeux
+      router.push("/admin/add-games");
+    } catch (error) {
+      console.error("Erreur : ", error.message);
+      setErrorMessage(
+        "Échec de la connexion, veuillez vérifier vos identifiants."
+      );
+
+      // Connexion échouée : dispatch de l'erreur
+      dispatch(loginFailure({ error: error.message }));
+    } finally {
+      console.log("Fin de la tentative de connexion");
+    }
   };
 
   return (
@@ -23,14 +71,14 @@ export default function ConnectionFrame() {
       <h1 className={styles.title}>CONNEXION ADMIN</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <label htmlFor="identifier" className={styles.label}>
+          <label htmlFor="username" className={styles.label}>
             Identifiant
           </label>
           <input
-            id="identifier"
+            id="username"
             type="text"
-            value={identifier}
-            onChange={(e) => setIdentifier(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className={styles.input}
           />
         </div>
@@ -46,6 +94,7 @@ export default function ConnectionFrame() {
             className={styles.input}
           />
         </div>
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         <button type="submit" className={styles.button}>
           Go !
         </button>
