@@ -19,13 +19,20 @@ const AdminSearchAPI = () => {
     { value: "61", label: "Lynx" },
   ];
 
+  const countryOptions = [
+    { value: "EU", label: "EU" },
+    { value: "US", label: "US" },
+    { value: "JP", label: "JP" },
+  ];
+
   const [platform, setPlatform] = useState("");
   const [searchRequest, setSearchRequest] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [selectedCountries, setSelectedCountries] = useState({});
   const [gamesToAdd, setGamesToAdd] = useState([]);
-  const [activeButtons, setActiveButtons] = useState({}); // Etat pour suivre les boutons activés
+  const [activeButtons, setActiveButtons] = useState({});
 
   const handleSearch = async () => {
     if (!platform) {
@@ -73,17 +80,23 @@ const AdminSearchAPI = () => {
     }));
   };
 
+  const handleCountryChange = (index, country) => {
+    setSelectedCountries((prev) => ({
+      ...prev,
+      [index]: country,
+    }));
+  };
+
   const handleAddGameToList = (index, game, selectedOption) => {
-    const isActive = activeButtons[index]; // Vérifie si le bouton est déjà actif
+    const isActive = activeButtons[index];
 
     if (isActive) {
-      // Si le jeu est déjà ajouté, on le retire
       setGamesToAdd((prevGames) => prevGames.filter((g) => g.id !== game.id));
     } else {
-      // Sinon, on l'ajoute
       const gameToAdd = {
         ...game,
         condition: selectedOption || "complet",
+        country: selectedCountries[index] || "EU",
       };
       setGamesToAdd((prevGames) => [...prevGames, gameToAdd]);
     }
@@ -93,6 +106,37 @@ const AdminSearchAPI = () => {
       ...prev,
       [index]: !isActive,
     }));
+  };
+
+  const handleSubmit = async () => {
+    if (gamesToAdd.length === 0) {
+      setErrorMessage("Aucun jeu à ajouter. Veuillez sélectionner des jeux.");
+      return;
+    }
+
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(`${API_URI}/games/addgames`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ gamesToAdd }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'ajout des jeux");
+      }
+
+      const result = await response.json();
+      console.log(result.message);
+
+      setGamesToAdd([]);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout des jeux:", error);
+      setErrorMessage("Une erreur est survenue lors de l'ajout des jeux");
+    }
   };
 
   return (
@@ -135,6 +179,17 @@ const AdminSearchAPI = () => {
               <div className={styles.gameInfo}>
                 <h3 className={styles.gameTitle}>{game.title}</h3>
                 <p className={styles.gamePlatformName}>{game.platform}</p>
+                <select
+                  value={selectedCountries[index] || "EU"}
+                  onChange={(e) => handleCountryChange(index, e.target.value)}
+                  className={styles.countrySelect}
+                >
+                  {countryOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className={styles.gameElements}>
                 <button
@@ -182,10 +237,7 @@ const AdminSearchAPI = () => {
         ))}
       </div>
       <div className={styles.finalButtonContainer}>
-        <button
-          className={styles.finalSubmitButton}
-          onClick={() => console.log("Jeux à ajouter :", gamesToAdd)}
-        >
+        <button className={styles.finalSubmitButton} onClick={handleSubmit}>
           Envoyer à la base de données
         </button>
       </div>
