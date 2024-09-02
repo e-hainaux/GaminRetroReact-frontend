@@ -1,0 +1,39 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  width: 100vw;
+  height: 10vh;
+  background: #d9d9d9;
+}
+
+.ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
+.li {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.link {
+  color: black;
+  text-decoration: none;
+  border: none;
+  background: none;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: #ff19cf;
+}
+
+.link:active,
+.link:focus {
+  color: #ff19cf;
+}
