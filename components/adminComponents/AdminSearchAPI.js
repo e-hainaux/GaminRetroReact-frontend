@@ -18,10 +18,14 @@ const AdminSearchAPI = () => {
     { value: "7", label: "Playstation" },
     { value: "61", label: "Lynx" },
   ];
+
   const [platform, setPlatform] = useState("");
   const [searchRequest, setSearchRequest] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [gamesToAdd, setGamesToAdd] = useState([]);
+  const [activeButtons, setActiveButtons] = useState({}); // Etat pour suivre les boutons activés
 
   const handleSearch = async () => {
     if (!platform) {
@@ -62,6 +66,35 @@ const AdminSearchAPI = () => {
     }
   };
 
+  const handleOptionChange = (index, option) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [index]: option,
+    }));
+  };
+
+  const handleAddGameToList = (index, game, selectedOption) => {
+    const isActive = activeButtons[index]; // Vérifie si le bouton est déjà actif
+
+    if (isActive) {
+      // Si le jeu est déjà ajouté, on le retire
+      setGamesToAdd((prevGames) => prevGames.filter((g) => g.id !== game.id));
+    } else {
+      // Sinon, on l'ajoute
+      const gameToAdd = {
+        ...game,
+        condition: selectedOption || "complet",
+      };
+      setGamesToAdd((prevGames) => [...prevGames, gameToAdd]);
+    }
+
+    // Mise à jour de l'état pour le bouton
+    setActiveButtons((prev) => ({
+      ...prev,
+      [index]: !isActive,
+    }));
+  };
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.searchControls}>
@@ -89,19 +122,72 @@ const AdminSearchAPI = () => {
       </div>
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <div className={styles.searchResults}>
+        <div className={styles.title}>Résultat</div>
+
         {searchResults.map((game, index) => (
-          <div key={index} className={styles.gameResult}>
-            <img
-              src={game.image}
-              alt={game.title}
-              className={styles.gameImage}
-            />
-            <div className={styles.gameInfo}>
-              <h3>{game.title}</h3>
-              <p>{game.platform}</p>
+          <div key={index} className={styles.gameCard}>
+            <div className={styles.gameResult}>
+              <img
+                src={game.image}
+                alt={game.title}
+                className={styles.gameImage}
+              />
+              <div className={styles.gameInfo}>
+                <h3 className={styles.gameTitle}>{game.title}</h3>
+                <p className={styles.gamePlatformName}>{game.platform}</p>
+              </div>
+              <div className={styles.gameElements}>
+                <button
+                  className={`${styles.radioButton} ${
+                    selectedOptions[index] === "complet" ? styles.selected : ""
+                  }`}
+                  onClick={() => handleOptionChange(index, "complet")}
+                >
+                  Complet
+                </button>
+                <button
+                  className={`${styles.radioButton} ${
+                    selectedOptions[index] === "boite" ? styles.selected : ""
+                  }`}
+                  onClick={() => handleOptionChange(index, "boite")}
+                >
+                  Boîte
+                </button>
+                <button
+                  className={`${styles.radioButton} ${
+                    selectedOptions[index] === "cartouche"
+                      ? styles.selected
+                      : ""
+                  }`}
+                  onClick={() => handleOptionChange(index, "cartouche")}
+                >
+                  Cartouche
+                </button>
+              </div>
+              <button
+                className={`${styles.addGameButton} ${
+                  activeButtons[index] ? styles.rotated : ""
+                }`}
+                onClick={() =>
+                  handleAddGameToList(index, game, selectedOptions[index])
+                }
+                disabled={!selectedOptions[index]}
+              >
+                +
+              </button>
             </div>
+
+            <div className={styles.separation}></div>
           </div>
         ))}
+      </div>
+      <div className={styles.finalButtonContainer}>
+        <button
+          className={styles.finalSubmitButton}
+          onClick={() => console.log("Jeux à ajouter :", gamesToAdd)}
+        >
+          Envoyer à la base de données
+        </button>
       </div>
     </div>
   );
