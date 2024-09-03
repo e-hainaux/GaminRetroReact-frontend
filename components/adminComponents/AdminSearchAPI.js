@@ -28,11 +28,13 @@ const AdminSearchAPI = () => {
   const [platform, setPlatform] = useState("");
   const [searchRequest, setSearchRequest] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [resultErrorMessage, setResultErrorMessage] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [selectedCountries, setSelectedCountries] = useState({});
   const [gamesToAdd, setGamesToAdd] = useState([]);
   const [activeButtons, setActiveButtons] = useState({});
+  const [successfulButtons, setSuccessfulButtons] = useState({});
 
   const handleSearch = async () => {
     if (!platform) {
@@ -45,11 +47,11 @@ const AdminSearchAPI = () => {
       return;
     }
 
+    resetButtonStates();
+
     setErrorMessage("");
 
     try {
-      console.log("Plateforme choisie : ", platform);
-
       const reponse = await fetch(
         `${API_URI}/games/apisearch?title=${encodeURIComponent(
           searchRequest
@@ -67,10 +69,20 @@ const AdminSearchAPI = () => {
       const dataResponse = await reponse.json();
 
       setSearchResults(dataResponse);
+      if (dataResponse.length === 0) {
+        setResultErrorMessage("Aucun jeu correspondant trouvé.");
+      }
     } catch (error) {
       console.error("Erreur lors de la recherche:", error);
       setErrorMessage("Une erreur est survenue lors de la recherche");
     }
+  };
+
+  const resetButtonStates = () => {
+    setActiveButtons({});
+    setSelectedOptions({});
+    setSelectedCountries({});
+    setSuccessfulButtons({});
   };
 
   const handleOptionChange = (index, option) => {
@@ -88,6 +100,8 @@ const AdminSearchAPI = () => {
   };
 
   const handleAddGameToList = (index, game, selectedOption) => {
+    if (successfulButtons[index]) return; // Empêche le clic si le bouton est marqué comme "successful"
+
     const isActive = activeButtons[index];
 
     if (isActive) {
@@ -132,6 +146,18 @@ const AdminSearchAPI = () => {
       const result = await response.json();
       console.log(result.message);
 
+      // Marquer les boutons comme réussis
+      const newSuccessfulButtons = {};
+      gamesToAdd.forEach((game) => {
+        const index = searchResults.findIndex((g) => g.id === game.id);
+        newSuccessfulButtons[index] = true;
+      });
+      setSuccessfulButtons((prev) => ({ ...prev, ...newSuccessfulButtons }));
+
+      // Réinitialiser les états sauf successfulButtons
+      setActiveButtons({});
+      setSelectedOptions({});
+      setSelectedCountries({});
       setGamesToAdd([]);
     } catch (error) {
       console.error("Erreur lors de l'ajout des jeux:", error);
@@ -167,7 +193,9 @@ const AdminSearchAPI = () => {
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <div className={styles.searchResults}>
         <div className={styles.title}>Résultat</div>
-
+        {resultErrorMessage && (
+          <p className={styles.errorMessage}>{resultErrorMessage}</p>
+        )}
         {searchResults.map((game, index) => (
           <div key={index} className={styles.gameCard}>
             <div className={styles.gameResult}>
@@ -222,13 +250,13 @@ const AdminSearchAPI = () => {
               <button
                 className={`${styles.addGameButton} ${
                   activeButtons[index] ? styles.rotated : ""
-                }`}
+                } ${successfulButtons[index] ? styles.successful : ""}`}
                 onClick={() =>
                   handleAddGameToList(index, game, selectedOptions[index])
                 }
-                disabled={!selectedOptions[index]}
+                disabled={!selectedOptions[index] || successfulButtons[index]}
               >
-                +
+                {successfulButtons[index] ? "✓" : "+"}
               </button>
             </div>
 
