@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { v4 as uuidv4 } from "uuid";
 import styles from "../../styles/AdminSearchAPI.module.css";
 
 const AdminSearchAPI = () => {
@@ -52,7 +53,7 @@ const AdminSearchAPI = () => {
     setErrorMessage("");
 
     try {
-      const reponse = await fetch(
+      const response = await fetch(
         `${API_URI}/games/apisearch?title=${encodeURIComponent(
           searchRequest
         )}&platform=${platform}`,
@@ -63,13 +64,19 @@ const AdminSearchAPI = () => {
           },
         }
       );
-      if (!reponse.ok) {
+      if (!response.ok) {
         throw new Error("Erreur lors de la recherche");
       }
-      const dataResponse = await reponse.json();
+      const dataResponse = await response.json();
+      console.log("Search results:", dataResponse);
 
-      setSearchResults(dataResponse);
-      if (dataResponse.length === 0) {
+      const gamesWithId = dataResponse.map((game) => ({
+        ...game,
+        tempId: uuidv4(),
+      }));
+
+      setSearchResults(gamesWithId);
+      if (gamesWithId.length === 0) {
         setResultErrorMessage("Aucun jeu correspondant trouvé.");
       }
     } catch (error) {
@@ -85,41 +92,51 @@ const AdminSearchAPI = () => {
     setSuccessfulButtons({});
   };
 
-  const handleOptionChange = (index, option) => {
+  const handleOptionChange = (tempId, option) => {
     setSelectedOptions((prev) => ({
       ...prev,
-      [index]: option,
+      [tempId]: option,
     }));
   };
 
-  const handleCountryChange = (index, country) => {
+  const handleCountryChange = (tempId, country) => {
     setSelectedCountries((prev) => ({
       ...prev,
-      [index]: country,
+      [tempId]: country,
     }));
   };
 
-  const handleAddGameToList = (index, game, selectedOption) => {
-    if (successfulButtons[index]) return; // Empêche le clic si le bouton est marqué comme "successful"
+  const handleAddGameToList = (tempId, game, selectedOption) => {
+    console.log(
+      "Button clicked for game with tempId:",
+      tempId,
+      "and game._id:",
+      game._id,
+      "game : ",
+      game
+    );
+    if (successfulButtons[tempId]) return; // Empêche le clic si le bouton est marqué comme "successful"
 
-    const isActive = activeButtons[index];
+    const isActive = activeButtons[tempId];
 
     if (isActive) {
-      setGamesToAdd((prevGames) => prevGames.filter((g) => g.id !== game.id));
+      setGamesToAdd((prevGames) =>
+        prevGames.filter((g) => g.tempId !== tempId)
+      );
     } else {
       const gameToAdd = {
         ...game,
         condition: selectedOption || "complet",
-        country: selectedCountries[index] || "EU",
+        country: selectedCountries[tempId] || "EU",
       };
       setGamesToAdd((prevGames) => [...prevGames, gameToAdd]);
     }
 
-    // Mise à jour de l'état pour le bouton
     setActiveButtons((prev) => ({
       ...prev,
-      [index]: !isActive,
+      [tempId]: !isActive,
     }));
+    console.log("Updated activeButtons state:", activeButtons);
   };
 
   const handleSubmit = async () => {
@@ -144,17 +161,17 @@ const AdminSearchAPI = () => {
       }
 
       const result = await response.json();
-      console.log(result.message);
+      console.log("Server response : ", result.message);
 
-      // Marquer les boutons comme réussis
       const newSuccessfulButtons = {};
       gamesToAdd.forEach((game) => {
-        const index = searchResults.findIndex((g) => g.id === game.id);
-        newSuccessfulButtons[index] = true;
+        const index = searchResults.findIndex((g) => g.tempId === game.tempId);
+        console.log("Game temp ID:", game.tempId, "found at index:", index);
+        newSuccessfulButtons[searchResults[index].tempId] = true;
       });
+      console.log("New successfulButtons state:", newSuccessfulButtons);
       setSuccessfulButtons((prev) => ({ ...prev, ...newSuccessfulButtons }));
 
-      // Réinitialiser les états sauf successfulButtons
       setActiveButtons({});
       setSelectedOptions({});
       setSelectedCountries({});
@@ -196,8 +213,8 @@ const AdminSearchAPI = () => {
         {resultErrorMessage && (
           <p className={styles.errorMessage}>{resultErrorMessage}</p>
         )}
-        {searchResults.map((game, index) => (
-          <div key={index} className={styles.gameCard}>
+        {searchResults.map((game) => (
+          <div key={game.tempId} className={styles.gameCard}>
             <div className={styles.gameResult}>
               <img
                 src={game.image}
@@ -208,8 +225,10 @@ const AdminSearchAPI = () => {
                 <h3 className={styles.gameTitle}>{game.title}</h3>
                 <p className={styles.gamePlatformName}>{game.platform}</p>
                 <select
-                  value={selectedCountries[index] || "EU"}
-                  onChange={(e) => handleCountryChange(index, e.target.value)}
+                  value={selectedCountries[game.tempId] || "EU"}
+                  onChange={(e) =>
+                    handleCountryChange(game.tempId, e.target.value)
+                  }
                   className={styles.countrySelect}
                 >
                   {countryOptions.map((option) => (
@@ -222,41 +241,52 @@ const AdminSearchAPI = () => {
               <div className={styles.gameElements}>
                 <button
                   className={`${styles.radioButton} ${
-                    selectedOptions[index] === "complet" ? styles.selected : ""
+                    selectedOptions[game.tempId] === "complet"
+                      ? styles.selected
+                      : ""
                   }`}
-                  onClick={() => handleOptionChange(index, "complet")}
+                  onClick={() => handleOptionChange(game.tempId, "complet")}
                 >
                   Complet
                 </button>
                 <button
                   className={`${styles.radioButton} ${
-                    selectedOptions[index] === "boite" ? styles.selected : ""
+                    selectedOptions[game.tempId] === "boite"
+                      ? styles.selected
+                      : ""
                   }`}
-                  onClick={() => handleOptionChange(index, "boite")}
+                  onClick={() => handleOptionChange(game.tempId, "boite")}
                 >
                   Boîte
                 </button>
                 <button
                   className={`${styles.radioButton} ${
-                    selectedOptions[index] === "cartouche"
+                    selectedOptions[game.tempId] === "cartouche"
                       ? styles.selected
                       : ""
                   }`}
-                  onClick={() => handleOptionChange(index, "cartouche")}
+                  onClick={() => handleOptionChange(game.tempId, "cartouche")}
                 >
                   Cartouche
                 </button>
               </div>
               <button
                 className={`${styles.addGameButton} ${
-                  activeButtons[index] ? styles.rotated : ""
-                } ${successfulButtons[index] ? styles.successful : ""}`}
+                  activeButtons[game.tempId] ? styles.rotated : ""
+                } ${successfulButtons[game.tempId] ? styles.successful : ""}`}
                 onClick={() =>
-                  handleAddGameToList(index, game, selectedOptions[index])
+                  handleAddGameToList(
+                    game.tempId,
+                    game,
+                    selectedOptions[game.tempId]
+                  )
                 }
-                disabled={!selectedOptions[index] || successfulButtons[index]}
+                disabled={
+                  !selectedOptions[game.tempId] ||
+                  successfulButtons[game.tempId]
+                }
               >
-                {successfulButtons[index] ? "✓" : "+"}
+                {successfulButtons[game.tempId] ? "✓" : "+"}
               </button>
             </div>
 
