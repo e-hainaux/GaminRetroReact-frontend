@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
-import styles from "../../styles/AdminUpdateBDD.module.css"; // Assurez-vous d'adapter le chemin à votre structure de dossier
+import styles from "../../styles/AdminUpdateBDD.module.css";
 
 const AdminUpdateGames = () => {
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
@@ -11,13 +11,15 @@ const AdminUpdateGames = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [resultErrorMessage, setResultErrorMessage] = useState("");
 
-  // Fonction pour récupérer les jeux depuis la BDD
+  useEffect(() => {
+    fetchGames();
+  }, []);
+
   const fetchGames = async () => {
     try {
       const response = await fetch(`${API_URI}/games/dbgames`);
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error("Erreur lors de la récupération des jeux");
-      }
       const data = await response.json();
       setGames(data);
     } catch (error) {
@@ -28,11 +30,6 @@ const AdminUpdateGames = () => {
     }
   };
 
-  useEffect(() => {
-    fetchGames();
-  }, []);
-
-  // Fonction pour rechercher les jeux par mot-clé
   const handleSearch = async () => {
     try {
       const response = await fetch(
@@ -40,29 +37,17 @@ const AdminUpdateGames = () => {
           searchRequest
         )}`
       );
-      if (!response.ok) {
-        throw new Error("Erreur lors de la recherche des jeux");
-      }
+      if (!response.ok) throw new Error("Erreur lors de la recherche des jeux");
       const data = await response.json();
       setGames(data);
-      if (data.length === 0) {
+      if (data.length === 0)
         setResultErrorMessage("Aucun jeu correspondant trouvé.");
-      }
     } catch (error) {
       console.error("Erreur lors de la recherche des jeux:", error);
       setErrorMessage("Une erreur est survenue lors de la recherche des jeux");
     }
   };
 
-  // Fonction pour activer/désactiver le mode de modification d'un jeu
-  const handleEditClick = (gameId) => {
-    setModifications((prev) => ({
-      ...prev,
-      [gameId]: { ...prev[gameId], isEditing: !prev[gameId]?.isEditing },
-    }));
-  };
-
-  // Fonction pour gérer les changements dans les champs de modification
   const handleModificationChange = (gameId, field, value) => {
     setModifications((prev) => ({
       ...prev,
@@ -70,68 +55,94 @@ const AdminUpdateGames = () => {
     }));
   };
 
-  // Fonction pour activer/désactiver la suppression d'un jeu
+  const handleEditClick = (gameId) => {
+    const button = document.getElementById(`edit-button-${gameId}`);
+    button.classList.toggle(styles.active);
+
+    if (gamesToDelete[gameId]) {
+      // Annule la suppression si une modification est en cours
+      setGamesToDelete((prev) => {
+        const newState = { ...prev };
+        delete newState[gameId];
+        return newState;
+      });
+    }
+  };
+
   const handleDeleteClick = (gameId) => {
     setGamesToDelete((prev) => {
       const newState = { ...prev };
       if (newState[gameId]) {
+        // Annule la suppression et les modifications pour ce jeu
         delete newState[gameId];
-        // Supprimer les modifications si le jeu est marqué pour suppression
         setModifications((prevMods) => {
           const updatedMods = { ...prevMods };
           delete updatedMods[gameId];
           return updatedMods;
         });
       } else {
+        // Marque le jeu pour suppression
         newState[gameId] = true;
+        // Annule les modifications pour ce jeu
+        setModifications((prevMods) => {
+          const updatedMods = { ...prevMods };
+          delete updatedMods[gameId];
+          return updatedMods;
+        });
       }
       return newState;
     });
+
+    const button = document.getElementById(`delete-button-${gameId}`);
+    button.classList.toggle(styles.selected);
   };
 
-  // Fonction pour valider les modifications et suppressions
+  const resetButtonsState = () => {
+    Object.keys(modifications).forEach((gameId) => {
+      const editButton = document.getElementById(`edit-button-${gameId}`);
+      const deleteButton = document.getElementById(`delete-button-${gameId}`);
+      if (editButton) editButton.classList.remove(styles.active);
+      if (deleteButton) deleteButton.classList.remove(styles.selected);
+    });
+  };
+
   const handleSubmit = async () => {
-    const gamesToUpdate = Object.keys(modifications).map((id) => ({
-      id,
-      complete: modifications[id]?.complete,
-      country: modifications[id]?.country,
-    }));
+    // Filtre les jeux à mettre à jour pour exclure ceux marqués pour suppression
+    const gamesToUpdate = Object.keys(modifications)
+      .filter((id) => !gamesToDelete[id])
+      .map((id) => ({
+        id,
+        complete: modifications[id]?.complete,
+        country: modifications[id]?.country,
+      }));
 
     const gameIdsToDelete = Object.keys(gamesToDelete);
 
     try {
-      // Mettre à jour les jeux
       if (gamesToUpdate.length > 0) {
         const responseUpdate = await fetch(`${API_URI}/games/updategames`, {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ gamesToUpdate }),
         });
-        if (!responseUpdate.ok) {
+        if (!responseUpdate.ok)
           throw new Error("Erreur lors de la mise à jour des jeux");
-        }
       }
 
-      // Supprimer les jeux
       if (gameIdsToDelete.length > 0) {
         const responseDelete = await fetch(`${API_URI}/games/deletegames`, {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ gameIds: gameIdsToDelete }),
         });
-        if (!responseDelete.ok) {
+        if (!responseDelete.ok)
           throw new Error("Erreur lors de la suppression des jeux");
-        }
       }
 
-      // Réactualiser la liste des jeux après les modifications
       await fetchGames();
       setModifications({});
       setGamesToDelete({});
+      resetButtonsState(); // Réinitialise l'état des boutons après la soumission
     } catch (error) {
       console.error(
         "Erreur lors de la mise à jour ou de la suppression des jeux:",
@@ -174,23 +185,11 @@ const AdminUpdateGames = () => {
               <div className={styles.gameInfo}>
                 <h3 className={styles.gameTitle}>{game.title}</h3>
                 <p className={styles.gamePlatformName}>{game.platform}</p>
-                {modifications[game._id]?.isEditing && (
-                  <div className={styles.modificationFields}>
-                    <input
-                      type="text"
-                      value={modifications[game._id]?.complete || game.complete}
-                      onChange={(e) =>
-                        handleModificationChange(
-                          game._id,
-                          "complete",
-                          e.target.value
-                        )
-                      }
-                      placeholder="Complétion"
-                      className={styles.inputField}
-                    />
-                    <input
-                      type="text"
+                <div className={styles.modificationFields}>
+                  <div className={styles.selectContainer}>
+                    <label htmlFor={`country-${game._id}`}>Pays :</label>
+                    <select
+                      id={`country-${game._id}`}
                       value={modifications[game._id]?.country || game.country}
                       onChange={(e) =>
                         handleModificationChange(
@@ -199,27 +198,91 @@ const AdminUpdateGames = () => {
                           e.target.value
                         )
                       }
-                      placeholder="Pays"
-                      className={styles.inputField}
-                    />
+                      className={styles.selectField}
+                    >
+                      <option value="EU">EU</option>
+                      <option value="US">US</option>
+                      <option value="JP">JP</option>
+                    </select>
                   </div>
-                )}
+                  <div className={styles.radioGroup}>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`complete-${game._id}`}
+                        value="complet"
+                        checked={
+                          modifications[game._id]?.complete === "complet" ||
+                          (!modifications[game._id] && game.complete === null)
+                        }
+                        onChange={() =>
+                          handleModificationChange(
+                            game._id,
+                            "complete",
+                            "complet"
+                          )
+                        }
+                        className={styles.radioInput}
+                      />
+                      Complet
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`complete-${game._id}`}
+                        value="boîte"
+                        checked={
+                          modifications[game._id]?.complete === "boîte" ||
+                          (!modifications[game._id] && game.complete === null)
+                        }
+                        onChange={() =>
+                          handleModificationChange(
+                            game._id,
+                            "complete",
+                            "boîte"
+                          )
+                        }
+                        className={styles.radioInput}
+                      />
+                      Boîte
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`complete-${game._id}`}
+                        value="cartouche"
+                        checked={
+                          modifications[game._id]?.complete === "cartouche" ||
+                          (!modifications[game._id] && game.complete === null)
+                        }
+                        onChange={() =>
+                          handleModificationChange(
+                            game._id,
+                            "complete",
+                            "cartouche"
+                          )
+                        }
+                        className={styles.radioInput}
+                      />
+                      Cartouche
+                    </label>
+                  </div>
+                </div>
               </div>
               <div className={styles.gameElements}>
                 <button
-                  className={`${styles.radioButton} ${
-                    modifications[game._id]?.isEditing ? styles.selected : ""
-                  }`}
+                  id={`edit-button-${game._id}`}
+                  className={styles.editButton}
                   onClick={() => handleEditClick(game._id)}
                   disabled={gamesToDelete[game._id]}
                 >
                   <FaEdit />
                 </button>
                 <button
-                  className={`${styles.radioButton} ${
-                    gamesToDelete[game._id] ? styles.selected : ""
-                  }`}
+                  id={`delete-button-${game._id}`}
+                  className={styles.deleteButton}
                   onClick={() => handleDeleteClick(game._id)}
+                  disabled={modifications[game._id]}
                 >
                   <FaTimes />
                 </button>
