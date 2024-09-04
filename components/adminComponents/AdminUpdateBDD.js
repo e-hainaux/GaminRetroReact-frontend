@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 import styles from "../../styles/AdminUpdateBDD.module.css";
 
-const AdminUpdateGames = () => {
+const AdminUpdateBDD = () => {
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
   const [searchRequest, setSearchRequest] = useState("");
   const [games, setGames] = useState([]);
@@ -56,65 +56,61 @@ const AdminUpdateGames = () => {
   };
 
   const handleEditClick = (gameId) => {
-    const button = document.getElementById(`edit-button-${gameId}`);
-    button.classList.toggle(styles.active);
+    setModifications((prev) => {
+      const updatedMods = { ...prev };
+      if (updatedMods[gameId]) {
+        delete updatedMods[gameId];
+      } else {
+        updatedMods[gameId] = {
+          country: games.find((game) => game._id === gameId)?.country || "EU",
+          complete: games.find((game) => game._id === gameId)?.complete || "",
+        };
+      }
+      return updatedMods;
+    });
 
-    if (gamesToDelete[gameId]) {
-      // Annule la suppression si une modification est en cours
-      setGamesToDelete((prev) => {
-        const newState = { ...prev };
-        delete newState[gameId];
-        return newState;
-      });
-    }
+    setGamesToDelete((prev) => {
+      const newState = { ...prev };
+      delete newState[gameId];
+      return newState;
+    });
   };
 
   const handleDeleteClick = (gameId) => {
     setGamesToDelete((prev) => {
       const newState = { ...prev };
       if (newState[gameId]) {
-        // Annule la suppression et les modifications pour ce jeu
         delete newState[gameId];
+        // Cancel any ongoing modifications
         setModifications((prevMods) => {
           const updatedMods = { ...prevMods };
           delete updatedMods[gameId];
           return updatedMods;
         });
       } else {
-        // Marque le jeu pour suppression
         newState[gameId] = true;
-        // Annule les modifications pour ce jeu
-        setModifications((prevMods) => {
-          const updatedMods = { ...prevMods };
-          delete updatedMods[gameId];
-          return updatedMods;
-        });
       }
       return newState;
-    });
-
-    const button = document.getElementById(`delete-button-${gameId}`);
-    button.classList.toggle(styles.selected);
-  };
-
-  const resetButtonsState = () => {
-    Object.keys(modifications).forEach((gameId) => {
-      const editButton = document.getElementById(`edit-button-${gameId}`);
-      const deleteButton = document.getElementById(`delete-button-${gameId}`);
-      if (editButton) editButton.classList.remove(styles.active);
-      if (deleteButton) deleteButton.classList.remove(styles.selected);
     });
   };
 
   const handleSubmit = async () => {
-    // Filtre les jeux à mettre à jour pour exclure ceux marqués pour suppression
     const gamesToUpdate = Object.keys(modifications)
       .filter((id) => !gamesToDelete[id])
-      .map((id) => ({
-        id,
-        complete: modifications[id]?.complete,
-        country: modifications[id]?.country,
-      }));
+      .map((id) => {
+        const { complete, country } = modifications[id];
+        // Ensure `complete` is selected
+        if (!complete) {
+          throw new Error(
+            `Veuillez sélectionner une complétion pour le jeu ${id}`
+          );
+        }
+        return {
+          id,
+          complete,
+          country,
+        };
+      });
 
     const gameIdsToDelete = Object.keys(gamesToDelete);
 
@@ -142,7 +138,6 @@ const AdminUpdateGames = () => {
       await fetchGames();
       setModifications({});
       setGamesToDelete({});
-      resetButtonsState(); // Réinitialise l'état des boutons après la soumission
     } catch (error) {
       console.error(
         "Erreur lors de la mise à jour ou de la suppression des jeux:",
@@ -199,6 +194,7 @@ const AdminUpdateGames = () => {
                         )
                       }
                       className={styles.selectField}
+                      disabled={!modifications[game._id]}
                     >
                       <option value="EU">EU</option>
                       <option value="US">US</option>
@@ -213,7 +209,8 @@ const AdminUpdateGames = () => {
                         value="complet"
                         checked={
                           modifications[game._id]?.complete === "complet" ||
-                          (!modifications[game._id] && game.complete === null)
+                          (!modifications[game._id] &&
+                            game.complete === "complet")
                         }
                         onChange={() =>
                           handleModificationChange(
@@ -223,6 +220,7 @@ const AdminUpdateGames = () => {
                           )
                         }
                         className={styles.radioInput}
+                        disabled={!modifications[game._id]}
                       />
                       Complet
                     </label>
@@ -233,7 +231,8 @@ const AdminUpdateGames = () => {
                         value="boîte"
                         checked={
                           modifications[game._id]?.complete === "boîte" ||
-                          (!modifications[game._id] && game.complete === null)
+                          (!modifications[game._id] &&
+                            game.complete === "boîte")
                         }
                         onChange={() =>
                           handleModificationChange(
@@ -243,6 +242,7 @@ const AdminUpdateGames = () => {
                           )
                         }
                         className={styles.radioInput}
+                        disabled={!modifications[game._id]}
                       />
                       Boîte
                     </label>
@@ -253,7 +253,8 @@ const AdminUpdateGames = () => {
                         value="cartouche"
                         checked={
                           modifications[game._id]?.complete === "cartouche" ||
-                          (!modifications[game._id] && game.complete === null)
+                          (!modifications[game._id] &&
+                            game.complete === "cartouche")
                         }
                         onChange={() =>
                           handleModificationChange(
@@ -263,6 +264,7 @@ const AdminUpdateGames = () => {
                           )
                         }
                         className={styles.radioInput}
+                        disabled={!modifications[game._id]}
                       />
                       Cartouche
                     </label>
@@ -272,17 +274,20 @@ const AdminUpdateGames = () => {
               <div className={styles.gameElements}>
                 <button
                   id={`edit-button-${game._id}`}
-                  className={styles.editButton}
+                  className={`${styles.editButton} ${
+                    modifications[game._id] ? styles.active : ""
+                  }`}
                   onClick={() => handleEditClick(game._id)}
-                  disabled={gamesToDelete[game._id]}
                 >
                   <FaEdit />
                 </button>
                 <button
                   id={`delete-button-${game._id}`}
-                  className={styles.deleteButton}
+                  className={`${styles.deleteButton} ${
+                    gamesToDelete[game._id] ? styles.selected : ""
+                  }`}
                   onClick={() => handleDeleteClick(game._id)}
-                  disabled={modifications[game._id]}
+                  disabled={!!modifications[game._id]}
                 >
                   <FaTimes />
                 </button>
@@ -301,4 +306,4 @@ const AdminUpdateGames = () => {
   );
 };
 
-export default AdminUpdateGames;
+export default AdminUpdateBDD;
