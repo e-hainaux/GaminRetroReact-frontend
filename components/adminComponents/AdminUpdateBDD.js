@@ -31,6 +31,8 @@ const AdminUpdateBDD = () => {
   };
 
   const handleSearch = async () => {
+    setResultErrorMessage("");
+
     try {
       const response = await fetch(
         `${API_URI}/games/searchdbgames?search=${encodeURIComponent(

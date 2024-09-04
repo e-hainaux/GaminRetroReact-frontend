@@ -38,6 +38,8 @@ const AdminSearchAPI = () => {
   const [successfulButtons, setSuccessfulButtons] = useState({});
 
   const handleSearch = async () => {
+    setResultErrorMessage("");
+
     if (!platform) {
       setErrorMessage("Veuillez sélectionner une plateforme");
       return;
