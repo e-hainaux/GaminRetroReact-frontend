@@ -28,6 +28,11 @@
   background: none;
 }
 
+.active {
+  cursor: pointer;
+  color: #ff19cf;
+}
+
 .link:hover {
   cursor: pointer;
   color: #ff19cf;

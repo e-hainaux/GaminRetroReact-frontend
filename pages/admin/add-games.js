@@ -6,7 +6,7 @@ import AdminSearchAPI from "../../components/adminComponents/AdminSearchAPI";
 import AdminUpdateBDD from "../../components/adminComponents/AdminUpdateBDD";
 
 function AddGames() {
-  const [activeTab, setActiveTab] = useState("add"); // Valeur par défaut
+  const [activeTab, setActiveTab] = useState("add");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -15,7 +15,7 @@ function AddGames() {
   return (
     <div>
       <AdminHeader />
-      <AdminControlPannel onTabChange={handleTabChange} />
+      <AdminControlPannel onTabChange={handleTabChange} activeTab={activeTab} />
       {activeTab === "add" && <AdminSearchAPI />}
       {activeTab === "update" && <AdminUpdateBDD />}
     </div>
