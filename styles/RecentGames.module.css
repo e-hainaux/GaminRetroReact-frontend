@@ -17,6 +17,10 @@
   font-weight: 500;
 }
 
+.loadingContainer {
+  margin: 24px 0;
+}
+
 .gamesContainer {
   display: flex;
   flex-direction: row;

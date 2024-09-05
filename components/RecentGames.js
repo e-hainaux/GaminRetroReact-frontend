@@ -4,6 +4,7 @@ import styles from "../styles/RecentGames.module.css";
 
 export default function RecentGames() {
   const [recentGames, setRecentGames] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
@@ -31,12 +32,33 @@ export default function RecentGames() {
         }
         const data = await response.json();
         setRecentGames(data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       } catch (error) {
         console.error(error.message);
+        setIsLoading(false);
       }
     };
     fetchGames();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className={styles.mainContainer}>
+        <h1 className={styles.title}>Récemment ajoutés</h1>
+        <div className={styles.loadingContainer}>
+          <Image
+            src="/images/alexKiddLoading.gif"
+            alt="Chargement..."
+            width={100}
+            height={100}
+          />
+          <p>Chargement en cours...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.mainContainer}>
