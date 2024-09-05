@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import styles from "../styles/Header.module.css";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 
-export default function Header() {
+export default function Header({ onImagesLoaded }) {
+  const [imagesLoaded, setImagesLoaded] = useState({
+    logo: false,
+    title: false,
+  });
+
+  useEffect(() => {
+    if (imagesLoaded.logo && imagesLoaded.title) {
+      onImagesLoaded();
+    }
+  }, [imagesLoaded, onImagesLoaded]);
+
+  const handleImageLoad = (imageName) => {
+    setImagesLoaded((prev) => ({ ...prev, [imageName]: true }));
+  };
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.logoContainer}>
@@ -14,6 +30,7 @@ export default function Header() {
           height={100}
           quality={100}
           className={styles.logoImage}
+          onLoad={() => handleImageLoad("logo")}
         />
       </div>
       <div className={styles.titleContainer}>
@@ -25,6 +42,7 @@ export default function Header() {
           quality={100}
           className={styles.titleImage}
           priority={true}
+          onLoad={() => handleImageLoad("title")}
         />
       </div>
       <div className={styles.searchIconContainer}>
