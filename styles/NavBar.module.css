@@ -24,6 +24,8 @@
 .link {
   color: black;
   text-decoration: none;
+  border: none;
+  background: none;
 }
 
 .link:hover {
@@ -34,4 +36,9 @@
 .link:active,
 .link:focus {
   color: #ff19cf;
+}
+
+.active {
+  color: #ff19cf;
+  font-weight: bold;
 }

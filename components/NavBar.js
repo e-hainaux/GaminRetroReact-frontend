@@ -1,34 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/NavBar.module.css";
 
-export default function NavBar() {
+export default function NavBar({ onTabChange, activeTab }) {
   return (
     <div className={styles.mainContainer}>
       <ul className={styles.ul}>
         <li className={styles.li}>
-          <a href="#" className={styles.link}>
+          <button
+            className={`${styles.link} ${
+              activeTab === "home" ? styles.active : ""
+            }`}
+            onClick={() => onTabChange("home")}
+          >
             Accueil
-          </a>
+          </button>
         </li>
         <li className={styles.li}>
-          <a href="#" className={styles.link}>
+          <button
+            className={`${styles.link} ${
+              activeTab === "atari" ? styles.active : ""
+            }`}
+            onClick={() => onTabChange("atari")}
+          >
             Atari
-          </a>
+          </button>
         </li>
         <li className={styles.li}>
-          <a href="#" className={styles.link}>
+          <button
+            className={`${styles.link} ${
+              activeTab === "nintendo" ? styles.active : ""
+            }`}
+            onClick={() => onTabChange("nintendo")}
+          >
             Nintendo
-          </a>
+          </button>
         </li>
         <li className={styles.li}>
-          <a href="#" className={styles.link}>
+          <button
+            className={`${styles.link} ${
+              activeTab === "sega" ? styles.active : ""
+            }`}
+            onClick={() => onTabChange("sega")}
+          >
             Sega
-          </a>
+          </button>
         </li>
         <li className={styles.li}>
-          <a href="#" className={styles.link}>
+          <button
+            className={`${styles.link} ${
+              activeTab === "sony" ? styles.active : ""
+            }`}
+            onClick={() => onTabChange("sony")}
+          >
             Sony
-          </a>
+          </button>
         </li>
       </ul>
     </div>

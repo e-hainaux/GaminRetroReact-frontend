@@ -1,0 +1,9 @@
+.mainContainer {
+  flex: 1;
+}
+
+.brandImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
