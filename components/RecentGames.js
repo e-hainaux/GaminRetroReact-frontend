@@ -52,7 +52,8 @@ export default function RecentGames() {
             src="/images/alexKiddLoading.gif"
             alt="Chargement..."
             width={100}
-            height={100}
+            height={144}
+            unoptimized
             className={styles.alexKiddGif}
           />
           <p>Chargement en cours...</p>
