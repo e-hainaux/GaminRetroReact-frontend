@@ -18,7 +18,18 @@
 }
 
 .loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 24px 0;
+}
+
+.alexKiddGif {
+  object-fit: cover;
+  width: 25%;
+  height: 25%;
+  margin-bottom: 16px;
 }
 
 .gamesContainer {

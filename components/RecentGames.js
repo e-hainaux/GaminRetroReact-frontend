@@ -53,6 +53,7 @@ export default function RecentGames() {
             alt="Chargement..."
             width={100}
             height={100}
+            className={styles.alexKiddGif}
           />
           <p>Chargement en cours...</p>
         </div>
