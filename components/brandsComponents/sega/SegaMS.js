@@ -3,7 +3,7 @@ import styles from "../../../styles/brands.module.css";
 import Image from "next/image";
 import { fetchGamesByPlatform } from "@/utils/fetchGamesByPlatform";
 
-export default function AtariLynx() {
+export default function SegaMS() {
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
   const [resultErrorMessage, setResultErrorMessage] = useState("");
   const [gamesList, setGamesList] = useState([]);
@@ -35,10 +35,10 @@ export default function AtariLynx() {
       />
       <div className={styles.gamesFrame}>
         <Image
-          src="/images/atariLynx.png"
-          alt="Logo LYNX"
-          width={2560}
-          height={287}
+          src="/images/segaMS.png"
+          alt="Logo Master System"
+          width={345}
+          height={68}
           quality={100}
           className={styles.platformImage}
         />
