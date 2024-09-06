@@ -15,6 +15,7 @@ import SegaMegaDrive from "../components/brandsComponents/sega/SegaMD";
 import SegaDreamcast from "../components/brandsComponents/sega/SegaDC";
 import SegaGameGear from "../components/brandsComponents/sega/SegaGG";
 import SonyPlaystation from "../components/brandsComponents/sony/SonyPS";
+import NintendoGBC from "./brandsComponents/nintendo/NintendoGBC";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("home");
@@ -78,7 +79,7 @@ export default function Home() {
       case "nintendo-gameboy":
         return <NintendoGameBoy />;
       case "nintendo-gbcolor":
-        return <NintendoGameBoy />;
+        return <NintendoGBC />;
       case "nintendo-gba":
         return <NintendoGBA />;
       case "sega-mastersystem":

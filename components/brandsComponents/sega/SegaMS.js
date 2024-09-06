@@ -1,62 +1,26 @@
-// import React from "react";
-// import styles from "../../../styles/brands.module.css";
-// import Image from "next/image";
-
-// export default function Sega() {
-//   return (
-//     <div className={styles.mainContainer}>
-//       <Image
-//         src="/images/segaLogo.png"
-//         alt="Logo SEGA"
-//         width={1200}
-//         height={401}
-//         quality={100}
-//         className={styles.brandImage}
-//       />
-//     </div>
-//   );
-// }
 import React, { useEffect, useState } from "react";
 import styles from "../../../styles/brands.module.css";
 import Image from "next/image";
-import fetch from "node-fetch";
+import { fetchGamesByPlatform } from "@/utils/fetchGamesByPlatform";
 
-export default function Atari() {
+export default function AtariLynx() {
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
   const [resultErrorMessage, setResultErrorMessage] = useState("");
   const [gamesList, setGamesList] = useState([]);
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const platform = "Master System";
+
+    const loadGames = async () => {
       try {
-        const platform = "Master System"; // Tu peux changer cette valeur pour une autre plateforme
-        const response = await fetch(
-          `${API_URI}/games/searchdbgamesbyplatform?platform=${platform}`, // Ajout du paramètre
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (response.status === 404 || response.status === 500) {
-          setResultErrorMessage("Erreur lors de la récupération des jeux.");
-          return;
-        }
-
-        const dataResponse = await response.json();
-        if (dataResponse.length === 0) {
-          setResultErrorMessage("Aucun jeu trouvé pour cette plateforme.");
-          return;
-        }
-
-        setGamesList(dataResponse);
+        const games = await fetchGamesByPlatform(API_URI, platform);
+        setGamesList(games);
       } catch (error) {
-        setResultErrorMessage("Une erreur est survenue.");
+        setResultErrorMessage(error.message);
       }
     };
 
-    fetchGames();
+    loadGames();
   }, []);
 
   return (

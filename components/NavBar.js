@@ -44,7 +44,7 @@ export default function NavBar({ onTabChange, activeTab }) {
         { id: "nintendo-nes", label: "NES" },
         { id: "nintendo-snes", label: "SNES" },
         { id: "nintendo-gameboy", label: "Game Boy" },
-        { id: "nintendo-gbcolor", label: "Game Boy Color" },
+        { id: "nintendo-gbcolor", label: "GB Color" },
         { id: "nintendo-gba", label: "GBA" },
       ],
     },
