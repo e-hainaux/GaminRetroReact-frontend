@@ -4,10 +4,16 @@ import Header from "./Header";
 import NavBar from "./NavBar";
 import RecentGames from "./RecentGames";
 import LoadingProgress from "../components/LoadingProgress";
-import Atari from "../components/brandsComponents/atari/Atari";
-import Nintendo from "../components/brandsComponents/nintendo/nintendo";
-import Sega from "../components/brandsComponents/sega/sega";
-import Sony from "../components/brandsComponents/sony/sony";
+import AtariLynx from "../components/brandsComponents/atari/AtariLynx";
+import NintendoNES from "../components/brandsComponents/nintendo/NintendoNES";
+import NintendoSNES from "../components/brandsComponents/nintendo/NintendoSNES";
+import NintendoGameBoy from "../components/brandsComponents/nintendo/NintendoGB";
+import NintendoGBA from "../components/brandsComponents/nintendo/NintendoGBA";
+import SegaMasterSystem from "../components/brandsComponents/sega/SegaMS";
+import SegaMegaDrive from "../components/brandsComponents/sega/SegaMD";
+import SegaDreamcast from "../components/brandsComponents/sega/SegaDC";
+import SegaGameGear from "../components/brandsComponents/sega/SegaGG";
+import SonyPlaystation from "../components/brandsComponents/sony/SonyPS";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("home");
@@ -62,14 +68,28 @@ export default function Home() {
     switch (activeTab) {
       case "home":
         return <RecentGames />;
-      case "atari":
-        return <Atari />;
-      case "nintendo":
-        return <Nintendo />;
-      case "sega":
-        return <Sega />;
-      case "sony":
-        return <Sony />;
+      case "atari-lynx":
+        return <AtariLynx />;
+      case "nintendo-nes":
+        return <NintendoNES />;
+      case "nintendo-snes":
+        return <NintendoSNES />;
+      case "nintendo-gameboy":
+        return <NintendoGameBoy />;
+      case "nintendo-gbcolor":
+        return <NintendoGameBoy />;
+      case "nintendo-gba":
+        return <NintendoGBA />;
+      case "sega-mastersystem":
+        return <SegaMasterSystem />;
+      case "sega-megadrive":
+        return <SegaMegaDrive />;
+      case "sega-dreamcast":
+        return <SegaDreamcast />;
+      case "sega-gamegear":
+        return <SegaGameGear />;
+      case "sony-playstation":
+        return <SonyPlaystation />;
       default:
         return <RecentGames />;
     }
