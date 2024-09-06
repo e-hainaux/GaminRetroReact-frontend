@@ -8,8 +8,8 @@ export default function Nintendo() {
       <Image
         src="/images/nintendoLogo.png"
         alt="Logo NINTENDO"
-        width={100}
-        height={100}
+        width={2000}
+        height={755}
         quality={100}
         className={styles.brandImage}
       />

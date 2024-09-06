@@ -8,8 +8,8 @@ export default function Sega() {
       <Image
         src="/images/segaLogo.png"
         alt="Logo SEGA"
-        width={100}
-        height={100}
+        width={1200}
+        height={401}
         quality={100}
         className={styles.brandImage}
       />

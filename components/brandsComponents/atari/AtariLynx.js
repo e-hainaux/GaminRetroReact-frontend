@@ -53,8 +53,8 @@ export default function Atari() {
       <Image
         src="/images/atariLogo.png"
         alt="Logo ATARI"
-        width={100}
-        height={100}
+        width={2560}
+        height={683}
         quality={100}
         className={styles.brandImage}
       />
@@ -62,8 +62,8 @@ export default function Atari() {
         <Image
           src="/images/atariLynx.png"
           alt="Logo LYNX"
-          width={100}
-          height={100}
+          width={2560}
+          height={287}
           quality={100}
           className={styles.platformImage}
         />

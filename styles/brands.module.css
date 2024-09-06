@@ -9,8 +9,8 @@
 
 .brandImage {
   object-fit: cover;
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
 }
 
 .gamesFrame {
@@ -33,8 +33,8 @@
 
 .platformImage {
   object-fit: cover;
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
   margin: 8px 0;
 }
 

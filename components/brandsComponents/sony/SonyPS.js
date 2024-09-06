@@ -8,8 +8,8 @@ export default function Sony() {
       <Image
         src="/images/sonyLogo.png"
         alt="Logo SONY"
-        width={100}
-        height={100}
+        width={1200}
+        height={201}
         quality={100}
         className={styles.brandImage}
       />
