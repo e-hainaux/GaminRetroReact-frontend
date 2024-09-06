@@ -22,7 +22,7 @@ export default function Home() {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleImagesLoaded = () => {
-    setLoading(false); // Fin du chargement
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -53,8 +53,8 @@ export default function Home() {
         await Promise.all(imagePromises);
         setIsTransitioning(true);
         setTimeout(() => {
-          setLoading(false); // Retire l'état de chargement une fois les images prêtes
-        }, 500); // Petite transition pour rendre le tout fluide
+          setLoading(false);
+        }, 500);
       } catch (error) {
         console.error("Failed to load images:", error);
         setLoading(false);
