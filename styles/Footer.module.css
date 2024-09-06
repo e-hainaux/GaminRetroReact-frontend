@@ -1,0 +1,35 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0;
+  gap: 24px;
+  width: 100%;
+  height: auto;
+  background: #0296b2;
+}
+
+.text {
+  text-align: center;
+  line-height: 36px;
+}
+
+.links {
+  display: flex;
+
+  gap: 16px;
+}
+
+.link {
+  color: #151515;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.link:hover .FaGithub {
+  color: #fff;
+}

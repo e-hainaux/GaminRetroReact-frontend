@@ -27,18 +27,24 @@
   box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.16);
 }
 
+.resultErrorMessage {
+  color: black;
+}
+
 .platformImage {
   object-fit: cover;
   width: 25%;
   height: 25%;
+  margin: 8px 0;
 }
 
 .gamesList {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: flex-start;
-  width: 85%;
+  align-items: center;
+  gap: 48px;
+  width: 80%;
   height: auto;
   min-height: 150px;
   margin: 16px;
@@ -47,8 +53,30 @@
 .gameCard {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
+  width: 88%;
+  height: auto;
 }
 
-.resultErrorMessage {
-  color: black;
+.gameInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 8px;
+  margin-left: 48px;
+}
+
+.gameImage {
+  width: 25%;
+  height: 25%;
+}
+
+.gameTitle {
+  font-size: 18px;
+}
+
+.gameDetails {
+  font-size: 16px;
+  font-weight: 500;
 }

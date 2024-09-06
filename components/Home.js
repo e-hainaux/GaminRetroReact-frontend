@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import Header from "./Header";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import RecentGames from "./RecentGames";
 import LoadingProgress from "../components/LoadingProgress";
 import AtariLynx from "../components/brandsComponents/atari/AtariLynx";
@@ -109,6 +110,7 @@ export default function Home() {
       <Header onImagesLoaded={handleImagesLoaded} />
       <NavBar activeTab={activeTab} onTabChange={setActiveTab} />
       <div className={styles.content}>{renderContent()}</div>
+      <Footer />
     </div>
   );
 }

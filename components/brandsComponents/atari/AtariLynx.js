@@ -80,9 +80,12 @@ export default function Atari() {
                 height={100}
                 className={styles.gameImage}
               />
-              <h3 className={styles.gameTitle}>{game.title}</h3>
-              <h4 className={styles.platformName}>{game.country}</h4>
-              <h4 className={styles.platformName}>{game.complete}</h4>
+              <div className={styles.gameInfo}>
+                <h3 className={styles.gameTitle}>{game.title}</h3>
+                <h4 className={styles.gameDetails}>
+                  {game.country} - {game.complete}
+                </h4>
+              </div>
             </div>
           ))}
         </div>
