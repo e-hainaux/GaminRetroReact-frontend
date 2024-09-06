@@ -107,10 +107,14 @@ export default function Home() {
 
   return (
     <div className={styles.mainContainer}>
-      <Header onImagesLoaded={handleImagesLoaded} />
-      <NavBar activeTab={activeTab} onTabChange={setActiveTab} />
-      <div className={styles.content}>{renderContent()}</div>
-      <Footer />
+      <div className={styles.topFlex}>
+        <Header onImagesLoaded={handleImagesLoaded} />
+        <NavBar activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className={styles.content}>{renderContent()}</div>
+      </div>
+      <div className={styles.bottomFlex}>
+        <Footer />
+      </div>
     </div>
   );
 }
