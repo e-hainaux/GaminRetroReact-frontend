@@ -112,10 +112,10 @@ const AdminSearchAPI = () => {
     console.log(
       "Button clicked for game with tempId:",
       tempId,
-      "and game._id:",
-      game._id,
       "game : ",
-      game
+      game,
+      "complete : ",
+      selectedOption
     );
     if (successfulButtons[tempId]) return; // Empêche le clic si le bouton est marqué comme "successful"
 
@@ -128,7 +128,7 @@ const AdminSearchAPI = () => {
     } else {
       const gameToAdd = {
         ...game,
-        condition: selectedOption || "complet",
+        complete: selectedOption || "complet",
         country: selectedCountries[tempId] || "EU",
       };
       setGamesToAdd((prevGames) => [...prevGames, gameToAdd]);
