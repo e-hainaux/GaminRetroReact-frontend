@@ -11,8 +11,9 @@ export default function Atari() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
+        const platform = "Lynx"; // Tu peux changer cette valeur pour une autre plateforme
         const response = await fetch(
-          `${API_URI}/games/searchdbgamesbyplatform`,
+          `${API_URI}/games/searchdbgamesbyplatform?platform=${platform}`, // Ajout du paramètre
           {
             method: "GET",
             headers: {
@@ -20,31 +21,23 @@ export default function Atari() {
             },
           }
         );
-        console.log("Longueur réponse reçue:", response.length);
-        if (response.length === 0) {
-          setResultErrorMessage("Aucun jeu trouvé");
+        if (response.status === 404 || response.status === 500) {
+          setResultErrorMessage("Erreur lors de la récupération des jeux.");
           return;
         }
 
-        const contentType = response.headers.get("content-type");
-        if (!contentType.includes("application/json")) {
-          throw new Error("La réponse n'est pas au format JSON !");
-        }
-        if (!response.ok) {
-          throw new error("Erreur lors de la récupération des jeux");
-        }
         const dataResponse = await response.json();
-
-        const gamesOnPlatform = dataResponse.map((game) => ({
-          ...game,
-        }));
-        if (gamesOnPlatform.length === 0) {
-          setResultErrorMessage("Aucun jeu correspondant trouvé.");
+        if (dataResponse.length === 0) {
+          setResultErrorMessage("Aucun jeu trouvé pour cette plateforme.");
+          return;
         }
 
         setGamesList(dataResponse);
-      } catch (error) {}
+      } catch (error) {
+        setResultErrorMessage("Une erreur est survenue.");
+      }
     };
+
     fetchGames();
   }, []);
 
