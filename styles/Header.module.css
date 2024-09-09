@@ -11,7 +11,12 @@
 
 .searchIconContainer {
   color: whitesmoke;
-  margin-right: 20px;
+  margin-right: 24px;
+}
+
+.searchIconContainer:hover {
+  cursor: pointer;
+  color: #ff19cf;
 }
 
 .logocontainer {

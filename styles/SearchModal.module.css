@@ -1,0 +1,110 @@
+.mainContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80vw;
+  max-width: 600px;
+  height: 88vh;
+}
+
+.closeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.closeButton {
+  background-color: white;
+  color: red;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid red;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: red;
+  color: white;
+}
+
+.searchBarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.searchBar {
+  width: 66%;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid lightgray;
+}
+
+.searchButton {
+  padding: 10px;
+  background-color: #0296b2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.gamesListContainer {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.gamesList {
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 15px;
+}
+
+.gameCard {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.gameImage {
+  margin-right: 10px;
+}
+
+.loadMoreButton {
+  width: 56px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: grey;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

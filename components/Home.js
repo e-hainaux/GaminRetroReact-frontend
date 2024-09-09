@@ -3,8 +3,9 @@ import styles from "../styles/Home.module.css";
 import Header from "./Header";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import RecentGames from "./RecentGames";
 import LoadingProgress from "../components/LoadingProgress";
+import RecentGames from "./RecentGames";
+
 import AtariLynx from "../components/brandsComponents/atari/AtariLynx";
 import NintendoNES from "../components/brandsComponents/nintendo/NintendoNES";
 import NintendoSNES from "../components/brandsComponents/nintendo/NintendoSNES";

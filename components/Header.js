@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/Header.module.css";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
+import SearchModal from "./SearchModal";
 
 export default function Header({ onImagesLoaded }) {
   const [imagesLoaded, setImagesLoaded] = useState({
     logo: false,
     title: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (imagesLoaded.logo && imagesLoaded.title) {
@@ -18,6 +20,14 @@ export default function Header({ onImagesLoaded }) {
 
   const handleImageLoad = (imageName) => {
     setImagesLoaded((prev) => ({ ...prev, [imageName]: true }));
+  };
+
+  const handleSearchClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -46,8 +56,10 @@ export default function Header({ onImagesLoaded }) {
         />
       </div>
       <div className={styles.searchIconContainer}>
-        <FaSearch style={styles.searchIcon} />
+        <FaSearch style={styles.searchIcon} onClick={handleSearchClick} />
       </div>
+
+      {isModalOpen && <SearchModal onClose={handleCloseModal} />}
     </div>
   );
 }
