@@ -21,7 +21,7 @@ const AdminUpdateBDD = () => {
       if (!response.ok)
         throw new Error("Erreur lors de la récupération des jeux");
       const data = await response.json();
-      setGames(data);
+      setGames(data.games);
     } catch (error) {
       console.error("Erreur lors de la récupération des jeux:", error);
       setErrorMessage(
