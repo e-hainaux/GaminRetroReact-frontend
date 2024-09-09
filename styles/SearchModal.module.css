@@ -80,22 +80,53 @@
 .gamesListContainer {
   flex-grow: 1;
   overflow: hidden;
+  width: 88%;
 }
 
 .gamesList {
   overflow-y: auto;
+  width: 100%;
   max-height: 100%;
-  padding-right: 15px;
+  padding-right: 4px;
 }
 
 .gameCard {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 10px;
+  width: 88%;
+  height: auto;
+  margin: 10px;
+}
+
+.gameInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  margin-left: 16px;
+}
+
+.gameTitle {
+  font-size: 14px;
+  text-align: left;
+}
+
+.platformName {
+  font-size: 12px;
+  font-weight: 300;
+  text-align: center;
 }
 
 .gameImage {
-  margin-right: 10px;
+  object-fit: cover;
+  margin-right: 8px;
+  width: 30%;
+  height: 30%;
 }
 
 .loadMoreButton {

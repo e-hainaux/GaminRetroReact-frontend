@@ -131,8 +131,10 @@ export default function SearchModal({ onClose }) {
                     height={100}
                     className={styles.gameImage}
                   />
-                  <h3 className={styles.gameTitle}>{game.title}</h3>
-                  <h4 className={styles.platformName}>{game.platform}</h4>
+                  <div className={styles.gameInfo}>
+                    <h3 className={styles.gameTitle}>{game.title}</h3>
+                    <h4 className={styles.platformName}>{game.platform}</h4>
+                  </div>
                 </div>
               ))}
             </div>
