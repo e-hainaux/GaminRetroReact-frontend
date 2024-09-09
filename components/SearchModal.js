@@ -10,25 +10,22 @@ export default function SearchModal({ onClose }) {
   const [offset, setOffset] = useState(0);
   const [hasMoreGames, setHasMoreGames] = useState(true);
   const [totalGames, setTotalGames] = useState(0);
-  const [isSearchActive, setIsSearchActive] = useState(false); // Nouveau flag pour gérer le mode recherche
+  const [isSearchActive, setIsSearchActive] = useState(false);
   const API_URI = process.env.NEXT_PUBLIC_API_URI;
   const gamesListRef = useRef(null);
 
-  // Réinitialisation lors de la fermeture de la modal
   useEffect(() => {
     if (onClose) {
       setLimit(10);
       setOffset(0);
       setGames([]);
       setHasMoreGames(true);
-      setIsSearchActive(false); // Reset du flag de recherche
+      setIsSearchActive(false);
     }
   }, [onClose]);
 
-  // Fonction pour charger les jeux avec pagination
   const fetchGames = async () => {
     if (hasMoreGames && !isSearchActive) {
-      // Ne charger que si la recherche n'est pas active
       setIsLoading(true);
       try {
         const response = await fetch(
@@ -43,14 +40,14 @@ export default function SearchModal({ onClose }) {
         const { games: newGames, totalCount } = await response.json();
 
         if (offset === 0) {
-          setGames(newGames); // Premier chargement
+          setGames(newGames);
         } else {
-          setGames((prevGames) => [...prevGames, ...newGames]); // Ajout des nouveaux jeux
+          setGames((prevGames) => [...prevGames, ...newGames]);
         }
 
         setTotalGames(totalCount);
         setIsLoading(false);
-        setHasMoreGames(offset + limit < totalCount); // Vérifier si tous les jeux ont été récupérés
+        setHasMoreGames(offset + limit < totalCount);
       } catch (error) {
         console.error("Erreur lors de la récupération des jeux", error);
         setIsLoading(false);
@@ -58,17 +55,15 @@ export default function SearchModal({ onClose }) {
     }
   };
 
-  // Premier appel de la fonction fetchGames au montage du composant
   useEffect(() => {
-    fetchGames(); // Charger les jeux au premier rendu
-  }, [offset, hasMoreGames]); // Appel de fetchGames lorsque l'offset ou hasMoreGames change
+    fetchGames();
+  }, [offset, hasMoreGames]);
 
-  // Fonction pour gérer la recherche
   const handleSearch = async () => {
-    if (!searchTerm) return; // Si le champ de recherche est vide, ne pas lancer la recherche
+    if (!searchTerm) return;
 
     setIsLoading(true);
-    setIsSearchActive(true); // Activer le mode recherche
+    setIsSearchActive(true);
     try {
       const response = await fetch(
         `${API_URI}/games/searchdbgames?search=${searchTerm}`,
@@ -82,13 +77,13 @@ export default function SearchModal({ onClose }) {
       const searchedGames = await response.json();
       console.log("searchedGames : ", searchedGames);
 
-      setGames(searchedGames); // Mettre à jour la liste des jeux
-      setOffset(0); // Réinitialiser l'offset
-      setHasMoreGames(false); // Désactiver le bouton "Charger plus" après une recherche
+      setGames(searchedGames);
+      setOffset(0);
+      setHasMoreGames(false);
       setIsLoading(false);
-      // Réinitialiser la position du scroll à zéro
+
       if (gamesListRef.current) {
-        gamesListRef.current.scrollTop = 0; // Revenir tout en haut de la liste
+        gamesListRef.current.scrollTop = 0;
       }
     } catch (error) {
       console.error("Erreur lors de la recherche", error);
@@ -98,7 +93,6 @@ export default function SearchModal({ onClose }) {
 
   const loadMoreGames = () => {
     if (!isSearchActive) {
-      // Charger plus de jeux seulement si ce n'est pas une recherche
       setOffset((prevOffset) => prevOffset + limit);
     }
   };
@@ -144,12 +138,11 @@ export default function SearchModal({ onClose }) {
             </div>
           )}
         </div>
-        {!isSearchActive &&
-          hasMoreGames && ( // N'afficher le bouton que si la recherche n'est pas active
-            <button className={styles.loadMoreButton} onClick={loadMoreGames}>
-              +
-            </button>
-          )}
+        {!isSearchActive && hasMoreGames && (
+          <button className={styles.loadMoreButton} onClick={loadMoreGames}>
+            +
+          </button>
+        )}
       </div>
     </div>
   );
