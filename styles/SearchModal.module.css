@@ -5,6 +5,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,6 +39,7 @@
 .closeButton {
   background-color: white;
   color: red;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   font-size: 16px;
   padding: 5px 10px;
@@ -127,12 +129,16 @@
   margin-right: 8px;
   width: 30%;
   height: 30%;
+  border-radius: 4px;
 }
 
 .loadMoreButton {
   width: 56px;
   padding: 10px;
-  margin-top: 20px;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
   background-color: grey;
   color: white;
   border: none;

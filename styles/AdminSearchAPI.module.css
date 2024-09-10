@@ -88,6 +88,7 @@
 .gameImage {
   width: auto;
   height: 150px;
+  border-radius: 4px;
 }
 
 .gameBlockTwo {

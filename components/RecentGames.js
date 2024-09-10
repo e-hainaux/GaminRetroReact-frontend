@@ -76,8 +76,10 @@ export default function RecentGames() {
               height={100}
               className={styles.gameImage}
             />
-            <h3 className={styles.gameTitle}>{game.title}</h3>
-            <h4 className={styles.platformName}>{game.platform}</h4>
+            <div className={styles.gameDetails}>
+              <h3 className={styles.gameTitle}>{game.title}</h3>
+              <h4 className={styles.platformName}>{game.platform}</h4>
+            </div>
           </div>
         ))}
       </div>

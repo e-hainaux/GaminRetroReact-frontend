@@ -51,8 +51,8 @@ export default function NintendoGB() {
               <Image
                 src={game.image}
                 alt={game.title}
-                width={100}
-                height={100}
+                width={264}
+                height={352}
                 className={styles.gameImage}
               />
               <div className={styles.gameInfo}>

@@ -69,7 +69,8 @@
 
 .gameImage {
   width: 25%;
-  height: 25%;
+  height: auto;
+  border-radius: 4px;
 }
 
 .gameTitle {
@@ -79,4 +80,41 @@
 .gameDetails {
   font-size: 16px;
   font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .gamesList {
+    width: 88%;
+  }
+  .platformImage {
+    width: 30%;
+    height: 30%;
+  }
+  .gameImage {
+    width: 33%;
+    height: auto;
+  }
+  .gameCard {
+    width: 100%;
+    height: 100%;
+  }
+
+  .gameInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 8px;
+    margin-left: 16px;
+  }
+
+  .gameTitle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .gameDetails {
+    width: 100%;
+    height: 100%;
+  }
 }
