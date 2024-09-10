@@ -198,16 +198,18 @@ const AdminSearchAPI = () => {
             </option>
           ))}
         </select>
-        <input
-          type="text"
-          value={searchRequest}
-          onChange={(e) => setSearchRequest(e.target.value)}
-          placeholder="Rechercher un jeu..."
-          className={styles.searchInput}
-        />
-        <button onClick={handleSearch} className={styles.searchButton}>
-          <FaSearch />
-        </button>
+        <div className={styles.searchBarContainer}>
+          <input
+            type="text"
+            value={searchRequest}
+            onChange={(e) => setSearchRequest(e.target.value)}
+            placeholder="Rechercher un jeu..."
+            className={styles.searchInput}
+          />
+          <button onClick={handleSearch} className={styles.searchButton}>
+            <FaSearch />
+          </button>
+        </div>
       </div>
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <div className={styles.searchResults}>
@@ -218,78 +220,86 @@ const AdminSearchAPI = () => {
         {searchResults.map((game) => (
           <div key={game.tempId} className={styles.gameCard}>
             <div className={styles.gameResult}>
-              <img
-                src={game.image}
-                alt={game.title}
-                className={styles.gameImage}
-              />
-              <div className={styles.gameInfo}>
-                <h3 className={styles.gameTitle}>{game.title}</h3>
-                <p className={styles.gamePlatformName}>{game.platform}</p>
-                <select
-                  value={selectedCountries[game.tempId] || "EU"}
-                  onChange={(e) =>
-                    handleCountryChange(game.tempId, e.target.value)
-                  }
-                  className={styles.countrySelect}
-                >
-                  {countryOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+              <div className={styles.gameBlockOne}>
+                <img
+                  src={game.image}
+                  alt={game.title}
+                  className={styles.gameImage}
+                />
+                <div className={styles.gameInfo}>
+                  <h3 className={styles.gameTitle}>{game.title}</h3>
+                  <p className={styles.gamePlatformName}>{game.platform}</p>
+                  <select
+                    value={selectedCountries[game.tempId] || "EU"}
+                    onChange={(e) =>
+                      handleCountryChange(game.tempId, e.target.value)
+                    }
+                    className={styles.countrySelect}
+                  >
+                    {countryOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              <div className={styles.gameElements}>
-                <button
-                  className={`${styles.radioButton} ${
-                    selectedOptions[game.tempId] === "complet"
-                      ? styles.selected
-                      : ""
-                  }`}
-                  onClick={() => handleOptionChange(game.tempId, "complet")}
-                >
-                  Complet
-                </button>
-                <button
-                  className={`${styles.radioButton} ${
-                    selectedOptions[game.tempId] === "boite"
-                      ? styles.selected
-                      : ""
-                  }`}
-                  onClick={() => handleOptionChange(game.tempId, "boite")}
-                >
-                  Boîte
-                </button>
-                <button
-                  className={`${styles.radioButton} ${
-                    selectedOptions[game.tempId] === "cartouche"
-                      ? styles.selected
-                      : ""
-                  }`}
-                  onClick={() => handleOptionChange(game.tempId, "cartouche")}
-                >
-                  Cartouche
-                </button>
+              <div className={styles.gameBlockTwo}>
+                <div className={styles.gameElements}>
+                  <button
+                    className={`${styles.radioButton} ${
+                      selectedOptions[game.tempId] === "complet"
+                        ? styles.selected
+                        : ""
+                    }`}
+                    onClick={() => handleOptionChange(game.tempId, "complet")}
+                  >
+                    Complet
+                  </button>
+                  <button
+                    className={`${styles.radioButton} ${
+                      selectedOptions[game.tempId] === "boite"
+                        ? styles.selected
+                        : ""
+                    }`}
+                    onClick={() => handleOptionChange(game.tempId, "boite")}
+                  >
+                    Boîte
+                  </button>
+                  <button
+                    className={`${styles.radioButton} ${
+                      selectedOptions[game.tempId] === "cartouche"
+                        ? styles.selected
+                        : ""
+                    }`}
+                    onClick={() => handleOptionChange(game.tempId, "cartouche")}
+                  >
+                    Cartouche
+                  </button>
+                </div>
+                <div className={styles.buttonContainer}>
+                  <button
+                    className={`${styles.addGameButton} ${
+                      activeButtons[game.tempId] ? styles.rotated : ""
+                    } ${
+                      successfulButtons[game.tempId] ? styles.successful : ""
+                    }`}
+                    onClick={() =>
+                      handleAddGameToList(
+                        game.tempId,
+                        game,
+                        selectedOptions[game.tempId]
+                      )
+                    }
+                    disabled={
+                      !selectedOptions[game.tempId] ||
+                      successfulButtons[game.tempId]
+                    }
+                  >
+                    {successfulButtons[game.tempId] ? "✓" : "+"}
+                  </button>
+                </div>
               </div>
-              <button
-                className={`${styles.addGameButton} ${
-                  activeButtons[game.tempId] ? styles.rotated : ""
-                } ${successfulButtons[game.tempId] ? styles.successful : ""}`}
-                onClick={() =>
-                  handleAddGameToList(
-                    game.tempId,
-                    game,
-                    selectedOptions[game.tempId]
-                  )
-                }
-                disabled={
-                  !selectedOptions[game.tempId] ||
-                  successfulButtons[game.tempId]
-                }
-              >
-                {successfulButtons[game.tempId] ? "✓" : "+"}
-              </button>
             </div>
 
             <div className={styles.separation}></div>

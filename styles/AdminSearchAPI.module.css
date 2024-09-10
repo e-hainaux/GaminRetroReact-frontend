@@ -1,5 +1,10 @@
 .mainContainer {
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
   height: auto;
 }
 
@@ -20,6 +25,7 @@
 .title {
   font-size: 14px;
   font-weight: 500;
+  margin-bottom: 16px;
   border-bottom: 1px dotted grey;
 }
 
@@ -172,4 +178,177 @@
   cursor: pointer;
   color: #939393;
   background-color: #ff85c2;
+}
+
+.searchControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 96%;
+  max-width: 800px;
+  gap: 10px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.platformSelect {
+  border: none;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.platformSelect:hover {
+  background-color: #e0e0e0;
+}
+
+.platformSelect option {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+}
+
+.searchBarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  gap: 8px;
+}
+
+.searchInput {
+  flex: 1;
+
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  box-shadow: 0 0 6px rgba(33, 150, 243, 0.5);
+}
+
+.searchButton {
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.searchButton:hover {
+  background-color: #1976d2;
+}
+
+.searchButton svg {
+  font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .searchControls {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .platformSelect,
+  .searchBarContainer {
+    width: 96%;
+
+    font-size: 14px;
+  }
+
+  .searchButton {
+    width: 50px;
+    padding: 12px;
+  }
+
+  .gameResult {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 0;
+    gap: 8px;
+  }
+
+  .gameBlockOne {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+  }
+
+  .gameInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 8px;
+    gap: 16px;
+  }
+
+  .gameImage {
+    width: 30%;
+    height: auto;
+  }
+
+  .gameTitle,
+  .gamePlatformName {
+    width: 100%;
+    height: 100%;
+  }
+
+  .gameBlockTwo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+  }
+
+  .gameElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    gap: 8px;
+  }
+
+  .radioButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 80px;
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+  }
 }

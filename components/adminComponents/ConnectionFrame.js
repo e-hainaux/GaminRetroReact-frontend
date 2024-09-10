@@ -71,7 +71,7 @@ export default function ConnectionFrame() {
           </label>
           <input
             id="username"
-            type="text"
+            type="password"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className={styles.input}
