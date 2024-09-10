@@ -14,7 +14,7 @@
   justify-content: space-around;
   align-items: center;
   width: 95%;
-  min-width: 400px;
+  min-width: 350px;
   height: 50%;
   margin: 25px;
   padding-top: 12px;
@@ -26,7 +26,7 @@
 .title {
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 24px;
+  margin: 24px 0;
   border-bottom: 1px dotted grey;
 }
 
@@ -286,7 +286,9 @@
 @media (max-width: 600px) {
   .searchResults {
     min-width: none;
+    padding: 8px;
   }
+
   .searchControls {
     display: flex;
     gap: 16px;
@@ -298,10 +300,6 @@
 
   .searchButton {
     width: 50px;
-  }
-
-  .searchResults {
-    padding: 4px;
   }
 
   .gameInfo {

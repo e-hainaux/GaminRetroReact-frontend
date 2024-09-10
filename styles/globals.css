@@ -19,12 +19,19 @@ body {
 }
 
 button {
+  all: unset;
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   outline: none;
+  touch-action: manipulation;
+}
+
+button:active {
+  outline: none;
+  background-color: transparent;
 }
 
 a {

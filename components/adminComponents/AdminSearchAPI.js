@@ -227,8 +227,10 @@ const AdminSearchAPI = () => {
                   className={styles.gameImage}
                 />
                 <div className={styles.gameInfo}>
-                  <h3 className={styles.gameTitle}>{game.title}</h3>
-                  <p className={styles.gamePlatformName}>{game.platform}</p>
+                  <div className={styles.gameDetails}>
+                    <h3 className={styles.gameTitle}>{game.title}</h3>
+                    <p className={styles.gamePlatformName}>{game.platform}</p>
+                  </div>
                   <select
                     value={selectedCountries[game.tempId] || "EU"}
                     onChange={(e) =>
