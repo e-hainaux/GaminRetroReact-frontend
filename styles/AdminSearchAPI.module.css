@@ -67,8 +67,8 @@
 }
 
 .gameImage {
-  height: 150px;
   width: auto;
+  height: 150px;
 }
 
 .gameElements {
@@ -242,7 +242,7 @@
 }
 
 .searchButton {
-  background-color: #2196f3;
+  background-color: #0296b2;
   color: #fff;
   border: none;
   padding: 10px 15px;

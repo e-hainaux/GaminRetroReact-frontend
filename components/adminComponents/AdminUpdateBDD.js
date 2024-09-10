@@ -173,103 +173,114 @@ const AdminUpdateBDD = () => {
         )}
         {games.map((game) => (
           <div key={game._id} className={styles.gameCard}>
+            <h3 className={styles.gameTitleSmallScreens}>{game.title}</h3>
             <div className={styles.gameResult}>
               <img
                 src={game.image}
                 alt={game.title}
                 className={styles.gameImage}
               />
+
               <div className={styles.gameInfo}>
-                <h3 className={styles.gameTitle}>{game.title}</h3>
-                <p className={styles.gamePlatformName}>{game.platform}</p>
-                <div className={styles.modificationFields}>
-                  <div className={styles.selectContainer}>
-                    <label htmlFor={`country-${game._id}`}>Pays :</label>
-                    <select
-                      id={`country-${game._id}`}
-                      value={modifications[game._id]?.country || game.country}
-                      onChange={(e) =>
-                        handleModificationChange(
-                          game._id,
-                          "country",
-                          e.target.value
-                        )
-                      }
-                      className={styles.selectField}
-                      disabled={!modifications[game._id]}
-                    >
-                      <option value="EU">EU</option>
-                      <option value="US">US</option>
-                      <option value="JP">JP</option>
-                    </select>
+                <div className={styles.gameDetails}>
+                  <h3 className={styles.gameTitle}>{game.title}</h3>
+                  <p className={styles.gamePlatformName}>{game.platform}</p>
+                </div>
+
+                <div className={styles.blocks}>
+                  <div className={styles.gameBlockOne}>
+                    <p className={styles.gamePlatformNameSmallScreens}>
+                      {game.platform}
+                    </p>
                   </div>
-                  <div className={styles.radioGroup}>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`complete-${game._id}`}
-                        value="complet"
-                        checked={
-                          modifications[game._id]?.complete === "complet" ||
-                          (!modifications[game._id] &&
-                            game.complete === "complet")
-                        }
-                        onChange={() =>
+                  <div className={styles.gameBlockTwo}>
+                    <div className={styles.selectContainer}>
+                      <select
+                        id={`country-${game._id}`}
+                        value={modifications[game._id]?.country || game.country}
+                        onChange={(e) =>
                           handleModificationChange(
                             game._id,
-                            "complete",
-                            "complet"
+                            "country",
+                            e.target.value
                           )
                         }
-                        className={styles.radioInput}
+                        className={styles.selectField}
                         disabled={!modifications[game._id]}
-                      />
-                      Complet
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`complete-${game._id}`}
-                        value="boîte"
-                        checked={
-                          modifications[game._id]?.complete === "boîte" ||
-                          (!modifications[game._id] &&
-                            game.complete === "boîte")
-                        }
-                        onChange={() =>
-                          handleModificationChange(
-                            game._id,
-                            "complete",
-                            "boîte"
-                          )
-                        }
-                        className={styles.radioInput}
-                        disabled={!modifications[game._id]}
-                      />
-                      Boîte
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`complete-${game._id}`}
-                        value="cartouche"
-                        checked={
-                          modifications[game._id]?.complete === "cartouche" ||
-                          (!modifications[game._id] &&
-                            game.complete === "cartouche")
-                        }
-                        onChange={() =>
-                          handleModificationChange(
-                            game._id,
-                            "complete",
-                            "cartouche"
-                          )
-                        }
-                        className={styles.radioInput}
-                        disabled={!modifications[game._id]}
-                      />
-                      Cartouche
-                    </label>
+                      >
+                        <option value="EU">EU</option>
+                        <option value="US">US</option>
+                        <option value="JP">JP</option>
+                      </select>
+                    </div>
+                    <div className={styles.radioGroup}>
+                      <label>
+                        <input
+                          type="radio"
+                          name={`complete-${game._id}`}
+                          value="complet"
+                          checked={
+                            modifications[game._id]?.complete === "complet" ||
+                            (!modifications[game._id] &&
+                              game.complete === "complet")
+                          }
+                          onChange={() =>
+                            handleModificationChange(
+                              game._id,
+                              "complete",
+                              "complet"
+                            )
+                          }
+                          className={styles.radioInput}
+                          disabled={!modifications[game._id]}
+                        />
+                        Complet
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name={`complete-${game._id}`}
+                          value="boîte"
+                          checked={
+                            modifications[game._id]?.complete === "boîte" ||
+                            (!modifications[game._id] &&
+                              game.complete === "boîte")
+                          }
+                          onChange={() =>
+                            handleModificationChange(
+                              game._id,
+                              "complete",
+                              "boîte"
+                            )
+                          }
+                          className={styles.radioInput}
+                          disabled={!modifications[game._id]}
+                        />
+                        Boîte
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name={`complete-${game._id}`}
+                          value="cartouche"
+                          checked={
+                            modifications[game._id]?.complete === "cartouche" ||
+                            (!modifications[game._id] &&
+                              game.complete === "cartouche")
+                          }
+                          onChange={() =>
+                            handleModificationChange(
+                              game._id,
+                              "complete",
+                              "cartouche"
+                            )
+                          }
+                          className={styles.radioInput}
+                          disabled={!modifications[game._id]}
+                        />
+                        Cartouche
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>

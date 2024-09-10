@@ -1,5 +1,10 @@
 .mainContainer {
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
   height: auto;
 }
 
@@ -9,6 +14,7 @@
   justify-content: space-around;
   align-items: center;
   width: 95%;
+  min-width: 400px;
   height: 50%;
   margin: 25px;
   padding-top: 12px;
@@ -20,6 +26,7 @@
 .title {
   font-size: 14px;
   font-weight: 500;
+  margin-bottom: 24px;
   border-bottom: 1px dotted grey;
 }
 
@@ -32,9 +39,31 @@
   padding: 0 16px;
 }
 
+.blocks {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+  height: 100%;
+}
+
+.gameBlockOne {
+  display: none;
+}
+
+.gameBlockTwo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
 .gameResult {
   width: 100%;
   height: 160px;
+  max-width: 900px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -44,16 +73,31 @@
 }
 
 .gameInfo {
-  width: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 66%;
   height: 100%;
+}
+
+.gameDetails {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
+  gap: 24px;
+  width: 50%;
+  height: 100%;
 }
 
 .gameTitle {
   font-size: 16px;
+}
+
+.gameTitleSmallScreens,
+.gamePlatformNameSmallScreens {
+  display: none;
 }
 
 .gamePlatformName {
@@ -63,10 +107,12 @@
 .gameImage {
   height: 150px;
   width: auto;
+  border-radius: 4px;
 }
 
 .gameElements {
-  width: 104px;
+  width: 10%;
+  min-width: 64px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -77,10 +123,11 @@
 .editButton {
   width: 36px;
   height: 36px;
+  font-size: 24px;
   border: none;
   border-radius: 50%;
-  background-color: whitesmoke; /* Fond gris au départ */
-  color: #0296b2; /* Crayon bleu */
+  background-color: whitesmoke;
+  color: #0296b2;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, transform 0.5s;
   display: flex;
@@ -89,13 +136,14 @@
 }
 
 .editButton.active {
-  background-color: green; /* Fond vert une fois cliqué */
-  color: white; /* Crayon blanc une fois cliqué */
-  transform: rotate(360deg); /* Rotation complète lors du clic */
+  background-color: green;
+  color: white;
+  transform: rotate(360deg);
 }
 
 .editButton:hover {
-  background-color: #45a049; /* Vert foncé au survol */
+  color: white;
+  background-color: #45a049;
 }
 
 .deleteButton {
@@ -103,8 +151,8 @@
   height: 36px;
   border: none;
   border-radius: 50%;
-  background-color: grey; /* Fond gris au départ */
-  color: pink; /* Croix rose */
+  background-color: grey;
+  color: pink;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   display: flex;
@@ -113,26 +161,21 @@
 }
 
 .deleteButton.selected {
-  background-color: red; /* Fond rouge une fois cliqué */
-  color: white; /* Croix blanche une fois cliqué */
+  background-color: red;
+  color: white;
 }
 
 .deleteButton:hover {
-  background-color: #d32f2f; /* Rouge foncé au survol */
+  color: white;
+  background-color: #d32f2f;
 }
 
 .selected {
-  background-color: #e57373; /* Rouge clair pour le bouton sélectionné */
-}
-
-.modificationFields {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
+  background-color: #e57373;
 }
 
 .selectContainer {
-  margin-bottom: 10px;
+  margin-top: 24px;
 }
 
 .selectField {
@@ -145,9 +188,15 @@
 .radioGroup {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 16px;
+  width: 50%;
+  height: 100%;
 }
 
 .radioInput {
+  border-radius: 8px;
   margin-right: 8px;
 }
 
@@ -182,4 +231,165 @@
   height: 1px;
   margin-bottom: 16px;
   background: grey;
+}
+
+.searchControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 96%;
+  max-width: 800px;
+  gap: 10px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.searchInput {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  box-shadow: 0 0 6px rgba(33, 150, 243, 0.5);
+}
+
+.searchButton {
+  background-color: #0296b2;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.searchButton:hover {
+  background-color: #1976d2;
+}
+
+.searchButton svg {
+  font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .searchResults {
+    min-width: none;
+  }
+  .searchControls {
+    display: flex;
+    gap: 16px;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 50px;
+  }
+
+  .searchResults {
+    padding: 4px;
+  }
+
+  .gameInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    margin-left: 8px;
+    gap: 8px;
+  }
+
+  .blocks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gameBlockOne {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .gameBlockTwo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    margin: none;
+    padding: none;
+  }
+
+  .gameCard {
+    padding: 0;
+  }
+
+  .gameResult {
+    padding: 0;
+  }
+
+  .gameImage {
+    width: auto;
+    height: 120px;
+  }
+
+  .gameTitle,
+  .gamePlatformName {
+    display: none;
+  }
+
+  .gameTitleSmallScreens,
+  .gamePlatformNameSmallScreens {
+    display: flex;
+    width: 100%;
+    height: auto;
+  }
+
+  .modificationFields {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .selectContainer {
+    width: 64px;
+    height: 56px;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+
+  .radioGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+    height: auto;
+  }
 }
