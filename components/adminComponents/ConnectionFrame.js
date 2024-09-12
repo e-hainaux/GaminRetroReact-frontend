@@ -48,7 +48,7 @@ export default function ConnectionFrame() {
 
       dispatch(loginSuccess({ token: data.token, username }));
 
-      router.push("/admin/add-games");
+      router.push("/admin/admin-access");
     } catch (error) {
       console.error("Erreur : ", error.message);
       setErrorMessage(

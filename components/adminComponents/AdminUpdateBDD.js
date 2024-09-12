@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 import styles from "../../styles/AdminUpdateBDD.module.css";
 
@@ -11,17 +11,18 @@ const AdminUpdateBDD = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [resultErrorMessage, setResultErrorMessage] = useState("");
 
-  useEffect(() => {
-    fetchGames();
-  }, []);
-
-  const fetchGames = async () => {
+  const fetchGames = async (search = "") => {
     try {
-      const response = await fetch(`${API_URI}/games/dbgames`);
+      const response = await fetch(
+        `${API_URI}/games/searchdbgames?search=${encodeURIComponent(search)}`
+      );
       if (!response.ok)
         throw new Error("Erreur lors de la récupération des jeux");
       const data = await response.json();
-      setGames(data.games);
+      setGames(data);
+      if (data.length === 0 && search !== "")
+        setResultErrorMessage("Aucun jeu correspondant trouvé.");
+      else setResultErrorMessage("");
     } catch (error) {
       console.error("Erreur lors de la récupération des jeux:", error);
       setErrorMessage(
@@ -30,24 +31,8 @@ const AdminUpdateBDD = () => {
     }
   };
 
-  const handleSearch = async () => {
-    setResultErrorMessage("");
-
-    try {
-      const response = await fetch(
-        `${API_URI}/games/searchdbgames?search=${encodeURIComponent(
-          searchRequest
-        )}`
-      );
-      if (!response.ok) throw new Error("Erreur lors de la recherche des jeux");
-      const data = await response.json();
-      setGames(data);
-      if (data.length === 0)
-        setResultErrorMessage("Aucun jeu correspondant trouvé.");
-    } catch (error) {
-      console.error("Erreur lors de la recherche des jeux:", error);
-      setErrorMessage("Une erreur est survenue lors de la recherche des jeux");
-    }
+  const handleSearch = () => {
+    fetchGames(searchRequest);
   };
 
   const handleModificationChange = (gameId, field, value) => {
@@ -83,7 +68,6 @@ const AdminUpdateBDD = () => {
       const newState = { ...prev };
       if (newState[gameId]) {
         delete newState[gameId];
-        // Cancel any ongoing modifications
         setModifications((prevMods) => {
           const updatedMods = { ...prevMods };
           delete updatedMods[gameId];
@@ -101,7 +85,7 @@ const AdminUpdateBDD = () => {
       .filter((id) => !gamesToDelete[id])
       .map((id) => {
         const { complete, country } = modifications[id];
-        // Ensure `complete` is selected
+
         if (!complete) {
           throw new Error(
             `Veuillez sélectionner une complétion pour le jeu ${id}`
@@ -137,7 +121,7 @@ const AdminUpdateBDD = () => {
           throw new Error("Erreur lors de la suppression des jeux");
       }
 
-      await fetchGames();
+      await fetchGames(searchRequest);
       setModifications({});
       setGamesToDelete({});
     } catch (error) {
