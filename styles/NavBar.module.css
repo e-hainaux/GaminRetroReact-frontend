@@ -59,7 +59,10 @@
 }
 
 .popoverItem {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
   padding: 8px 10px;
   border: none;
@@ -71,6 +74,7 @@
 }
 
 .popoverItem:hover {
+  width: 85%;
   background-color: #f0f0f0;
   color: #ff19cf;
 }
