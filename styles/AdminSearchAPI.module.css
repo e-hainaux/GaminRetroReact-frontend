@@ -29,6 +29,15 @@
   border-bottom: 1px dotted grey;
 }
 
+.errorMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
 .gameCard {
   width: 100%;
   display: flex;
@@ -137,6 +146,9 @@
 }
 
 .addGameButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 48px;
   height: 48px;
   border: none;
@@ -145,7 +157,17 @@
   text-align: center;
   background: #0197b2;
   color: white;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.addGameButton:active {
+  background-color: #0197b2;
+  color: white;
+  transform: none;
 }
 
 .addGameButton:disabled {
@@ -379,7 +401,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    width: 40px;
+    width: 48px;
     padding: 8px 18px;
     border-radius: 8px;
   }
