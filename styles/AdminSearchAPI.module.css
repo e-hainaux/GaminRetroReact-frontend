@@ -198,11 +198,9 @@
 }
 
 .finalSubmitButton {
-  width: auto;
-  height: auto;
-  font-size: 12px;
-  font-weight: 800;
-  padding: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
   color: #ff19cf;
   background: #d9d9d9;
   border: 1px solid #939393;
@@ -211,8 +209,9 @@
 
 .finalSubmitButton:hover {
   cursor: pointer;
-  color: #939393;
+  color: white;
   background-color: #ff85c2;
+  border: 1px solid white;
 }
 
 .searchControls {
@@ -273,7 +272,7 @@
 
 .searchInput:focus {
   outline: none;
-  box-shadow: 0 0 6px rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 6px rgba(2, 150, 178, 0.5);
 }
 
 .searchButton {

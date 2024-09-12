@@ -134,6 +134,7 @@ export default function SearchModal({ onClose }) {
                   <div className={styles.gameInfo}>
                     <h3 className={styles.gameTitle}>{game.title}</h3>
                     <h4 className={styles.platformName}>{game.platform}</h4>
+                    <h4 className={styles.complete}>{game.complete}</h4>
                   </div>
                 </div>
               ))}

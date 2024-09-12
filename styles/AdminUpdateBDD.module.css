@@ -202,7 +202,7 @@
 
 .finalButtonContainer {
   position: fixed;
-  bottom: 0;
+  bottom: 8px;
   width: 100%;
   height: auto;
   display: flex;
@@ -222,8 +222,9 @@
 
 .finalSubmitButton:hover {
   cursor: pointer;
-  color: #939393;
+  color: white;
   background-color: #ff85c2;
+  border: 1px solid white;
 }
 
 .separation {
@@ -259,7 +260,7 @@
 
 .searchInput:focus {
   outline: none;
-  box-shadow: 0 0 6px rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 6px rgba(2, 150, 178, 0.5);
 }
 
 .searchButton {

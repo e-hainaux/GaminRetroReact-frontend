@@ -58,7 +58,8 @@ export default function AtariLynx() {
               <div className={styles.gameInfo}>
                 <h3 className={styles.gameTitle}>{game.title}</h3>
                 <h4 className={styles.gameDetails}>
-                  {game.country} - {game.complete}
+                  {game.country} -{" "}
+                  <span className={styles.complete}>{game.complete}</span>
                 </h4>
               </div>
             </div>

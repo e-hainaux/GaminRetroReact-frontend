@@ -124,6 +124,19 @@
   text-align: center;
 }
 
+.complete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px;
+  border-radius: 16px;
+
+  color: white;
+  background-color: rgba(2, 150, 178, 0.75);
+}
+
 .gameImage {
   object-fit: cover;
   margin-right: 8px;

@@ -78,8 +78,26 @@
 }
 
 .gameDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
   font-size: 16px;
   font-weight: 500;
+}
+
+.complete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px;
+  border-radius: 16px;
+
+  color: white;
+  background-color: rgba(2, 150, 178, 0.75);
 }
 
 @media (max-width: 600px) {
