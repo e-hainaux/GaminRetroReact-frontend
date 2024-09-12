@@ -21,8 +21,9 @@
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  width: 80vw;
-  max-width: 600px;
+  width: 88vw;
+  max-width: 900px;
+  min-width: 250px;
   height: 88vh;
 }
 
@@ -37,12 +38,16 @@
 }
 
 .closeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   color: red;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
+  width: 24px;
+  height: 24px;
   font-size: 16px;
-  padding: 5px 10px;
   border: 1px solid red;
   border-radius: 8px;
   cursor: pointer;
@@ -71,6 +76,10 @@
 }
 
 .searchButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
   padding: 10px;
   background-color: #0296b2;
   color: white;
@@ -157,4 +166,42 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .modalContent {
+    width: 90vw;
+    height: 90vh;
+  }
+
+  .gamesListContainer {
+    width: 100%;
+  }
+
+  .searchBarContainer {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .searchBar {
+    width: 72%;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 500px) {
+  .searchBar {
+    width: 75%;
+    border-radius: 8px;
+  }
+
+  .searchButton {
+    width: 32px;
+  }
+}
+
+@media (max-width: 300px) {
+  .searchBar {
+    width: 66%;
+  }
 }

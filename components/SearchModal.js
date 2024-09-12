@@ -114,7 +114,7 @@ export default function SearchModal({ onClose }) {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button className={styles.searchButton} onClick={handleSearch}>
-            Rechercher
+            Ok
           </button>
         </div>
         <div className={styles.gamesListContainer}>
