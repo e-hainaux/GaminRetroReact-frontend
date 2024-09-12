@@ -69,6 +69,7 @@
 
 .gameImage {
   width: 25%;
+  max-width: 128px;
   height: auto;
   border-radius: 4px;
 }

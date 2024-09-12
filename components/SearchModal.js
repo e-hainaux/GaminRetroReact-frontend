@@ -127,8 +127,9 @@ export default function SearchModal({ onClose }) {
                   <Image
                     src={game.image}
                     alt={game.title}
-                    width={100}
-                    height={100}
+                    width={128}
+                    height={171}
+                    quality={100}
                     className={styles.gameImage}
                   />
                   <div className={styles.gameInfo}>
