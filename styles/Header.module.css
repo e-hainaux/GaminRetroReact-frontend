@@ -1,17 +1,56 @@
 .mainContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100vw;
-  height: auto;
-  min-height: 20vh;
+  width: 100%;
+  padding: 0.5rem 1rem;
   background: #0296b2;
 }
 
+.blockOne {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  max-width: 70%;
+}
+
+.logoContainer {
+  width: 30%;
+  min-width: 60px;
+  max-width: 150px;
+  margin-right: 1rem;
+}
+
+.titleContainer {
+  width: 70%;
+  max-width: 350px;
+}
+
+.logoImage,
+.titleImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.blockTwo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  min-width: 40px;
+}
+
 .searchIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
   color: whitesmoke;
-  margin-right: 24px;
+  border-radius: 50%;
 }
 
 .searchIconContainer:hover {
@@ -19,12 +58,68 @@
   color: #ff19cf;
 }
 
-.logocontainer {
-  overflow: hidden;
+@media (max-width: 768px) {
+  .blockOne {
+    max-width: 75%;
+  }
+
+  .blockTwo {
+    width: 15%;
+  }
+
+  .logoContainer {
+    min-width: 50px;
+    max-width: 100px;
+  }
+
+  .titleContainer {
+    max-width: 250px;
+  }
 }
-.logoImage,
-.titleImage {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+
+@media (max-width: 480px) {
+  .mainContainer {
+    padding: 0.5rem;
+  }
+
+  .blockOne {
+    max-width: 80%;
+  }
+
+  .logoContainer {
+    min-width: 40px;
+    max-width: 80px;
+    margin-right: 0.5rem;
+  }
+
+  .titleContainer {
+    max-width: 200px;
+  }
+
+  .blockTwo {
+    width: 10%;
+  }
+
+  .searchIconContainer {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .logoContainer {
+    min-width: 30px;
+    max-width: 60px;
+  }
+
+  .titleContainer {
+    max-width: 150px;
+  }
+
+  .searchIconContainer {
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+  }
 }

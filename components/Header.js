@@ -32,31 +32,40 @@ export default function Header({ onImagesLoaded }) {
 
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.logoContainer}>
-        <Image
-          src="/images/GaminRetroLogo.png"
-          alt="Logo"
-          width={100}
-          height={100}
-          quality={100}
-          className={styles.logoImage}
-          onLoad={() => handleImageLoad("logo")}
-        />
+      <div className={styles.blockOne}>
+        <div className={styles.logoContainer}>
+          <Image
+            src="/images/GaminRetroLogo.png"
+            alt="Logo"
+            width={500}
+            height={500}
+            quality={100}
+            className={styles.logoImage}
+            onLoad={() => handleImageLoad("logo")}
+          />
+        </div>
+        <div className={styles.titleContainer}>
+          <Image
+            src="/images/GaminRetroTitleTransparent.png"
+            alt="Logo"
+            width={500}
+            height={250}
+            quality={100}
+            className={styles.titleImage}
+            priority={true}
+            onLoad={() => handleImageLoad("title")}
+          />
+        </div>
       </div>
-      <div className={styles.titleContainer}>
-        <Image
-          src="/images/GaminRetroTitleSmall.png"
-          alt="Logo"
-          width={200}
-          height={100}
-          quality={100}
-          className={styles.titleImage}
-          priority={true}
-          onLoad={() => handleImageLoad("title")}
-        />
-      </div>
-      <div className={styles.searchIconContainer}>
-        <FaSearch style={styles.searchIcon} onClick={handleSearchClick} />
+
+      <div className={styles.blockTwo}>
+        <div className={styles.searchIconContainer}>
+          <FaSearch
+            size={"1em"}
+            style={styles.searchIcon}
+            onClick={handleSearchClick}
+          />
+        </div>
       </div>
 
       {isModalOpen && <SearchModal onClose={handleCloseModal} />}
